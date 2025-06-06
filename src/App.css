@@ -2,14 +2,6 @@
   text-align: center;
 }
 
-.black-nav{
-  display: flex;
-  background-color: pink;
-  width: 100%;
-  color: black;
-  padding-left: 20px;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
