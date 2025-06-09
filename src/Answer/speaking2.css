@@ -28,6 +28,7 @@ body {
   overflow: hidden;
   left: 237px;
 }
+
 .progress-dots .dot {
   width: 20px;
   height: 20px;
@@ -66,13 +67,15 @@ body {
 
 .question-title {
   position: relative; 
-  top: 0px;  
+  top: 5px;  
+  color: content/standard/secondary;
   font-style: normal;
   line-height: normal;
+  /* marginbottom: 77px; */
 }
 
 .question-text2 {
-  position: relative; 
+ position: relative; 
   font-size: 30px;
   top: 40px; 
   margin-bottom: 20px;
@@ -80,7 +83,7 @@ body {
 }
 .think-image{
   position: relative;
-  top: 40px;
+  top: 60px;
 }
 
 .timer-text {
@@ -108,9 +111,9 @@ body {
   stroke-width: 14;
 }
 
-.circle-progress1 {
+.circle-progress {
   fill: none;
-  stroke: #5A72FF; /* 진행 바 색상 */
+  stroke: #9760E9; /* 진행 바 색상 */
   stroke-width: 14;
   stroke-linecap: round;
   stroke-dasharray: 691;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './speaking.css';
+import './speaking3.css';
 import { useNavigate } from 'react-router-dom';
-import Question1 from '../Question/title_1.svg';
+import Question1 from '../Question/title_3.svg';
 import Think from './answer_1.svg';
-function Speaking() {
+function Speaking3() {
   
-  const [progress] = useState(34); // 0%에서 시작!  
+  const [progress] = useState(100);
   const [timeLeft, setTimeLeft] = useState(10); // 타이머 초기값
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function Speaking() {
       setTimeLeft((prev) => {
         if (prev === 0) {
           clearInterval(timerInterval); 
-          navigate('/question2'); // 타이머 종료 후 페이지 이동 
+          navigate('/answerLoading'); // 타이머 종료 후 페이지 이동 
         }
         return prev > 0 ? prev - 1 : 0; // 타이머 감소
       }); 
@@ -30,8 +30,8 @@ function Speaking() {
   const circleRadius = 110; // 반지름   
   const circleCircumference = 2 * Math.PI * circleRadius; // 원 둘레
 
-
-   const dotPercents = [0, 33, 66, 99];
+  // 점 개수와 진행도 계산
+const dotPercents = [0, 33, 66, 99];
 
   return (
     <div className="start-container">
@@ -50,11 +50,11 @@ function Speaking() {
         }}
       />
     ))}
-  </div>
+    </div>
       </div>
       <div className="question-box">
-        <img src={Question1} alt="질문1" className="question-title" />
-        <p className="question-text">맨홀 뚜껑은 왜 원형일까요?</p>
+        <img src={Question1} alt="질문3" className="question-title3" />
+        <p className="question-text3">빨간 벽돌을 건축자재 외에 어떤 용도로 사용할 수 있을까요?</p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image" />
         </p>
@@ -84,4 +84,4 @@ function Speaking() {
   );
 }
 
-export default Speaking;
+export default Speaking3;

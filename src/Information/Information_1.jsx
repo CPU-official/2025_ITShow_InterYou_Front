@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./Information_1.css";
-import Information_2 from "./Information_2";
+import './Information.css';
+import Information2 from "./Information_2";
 function Information_1() {
   const[showModal, setShowModal] = useState(false); // showModal이 모달창 열려 있는지 확인 여부
 
@@ -13,7 +13,7 @@ function Information_1() {
   }
 
   return (
-    <>
+    <main>
       <img
         className="headPhone_img"
         src="/img/info_headphone.png"
@@ -58,9 +58,9 @@ function Information_1() {
       <button className="startButton" onClick={StartClick}>
         <p id="startText">시작하기 &gt;</p>
       </button>
-      {showModal && <Information_2 onClose={closeModal}/>}
-    </>
-  );
+      {showModal && <Information2 onClose={closeModal}/>}
+   </main>
+   );
 }
 
 export default Information_1;

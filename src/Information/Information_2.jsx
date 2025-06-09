@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./Information_2.css";
+import { useNavigate } from "react-router-dom"; // 추가
+import './ModalNotification.css';
 
 function Information_2({ onClose }) {
 
@@ -15,12 +16,15 @@ function Information_2({ onClose }) {
     setName(e.target.value); // 입력한 값이 setName e.target.value가 사용자가 타이핑한 이름
   };
 
+  const navigate = useNavigate(); // 추가
+
   // 테스트 시작하기 버튼
-  const [showModal, setShowModal] = useState(false);
-  // 다른 창 연결 되는 코드로 바꿔야함 (알단 그냥 모달 창으로 연결해놓음)
   const testButtonClick = () => {
-    setShowModal(true);
-    //navigate("/파일명");
+    if (!agree) {
+      alert("촬영 동의에 체크해 주세요.");
+      return;
+    }
+    navigate("/question");
   };
 
   return (
