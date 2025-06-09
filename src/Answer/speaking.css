@@ -29,15 +29,21 @@ body {
   left: 237px;
 }
 
-.progress-dots {
-  position: absolute;
-  top: 60px; /* 진행바 아래로 */
-  width: 85%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  pointer-events: none;
+.progress-dots .dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  margin: 0 8px;
+  display: inline-block;
+  transition: background 0.7s cubic-bezier(.4,2,.6,1);
 }
+
+/* 각 점에 순서대로 색상 적용 */
+.progress-dots .dot-filled.dot1 { background: #5772EB; }
+.progress-dots .dot-filled.dot2 { background: #7769EA; }
+.progress-dots .dot-filled.dot3 { background: #965FE9; }
+.progress-dots .dot-filled.dot4 { background: #B757E8; }
 
 .progress {
   height: 100%;
@@ -51,37 +57,40 @@ body {
 .question-box {
   text-align: center;
   background: #F9FCFF;
-  padding: 20px;
   border-radius: 23px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   top : 52px;
   width: 714px;
   height: 378px;
-  margin-bottom: 78px;
+  /* margin-bottom: 78px; */
 }
 
 .question-title {
-  font-size: 30px;
-  font-weight: 600px;
   position: relative; 
-  top: 52px;
+  top: 5px;  
   color: content/standard/secondary;
-  font-family: Pretendard;
+  font-family : 'Pretendard', sans-serif;
   font-style: normal;
   line-height: normal;
-  margin-bottom: 77px;
+  /* marginbottom: 77px; */
 }
 
 .question-text {
+  position: relative; 
   font-size: 40px;
-  top: 165px; 
-  margin-bottom: 78px;
+  top: 60px; 
+  margin-bottom: 77px;
+   font-family: Pretendard;
+}
+.think-image{
+  position: relative;
+  top: 60px;
 }
 
 .timer-text {
   font-size: 24px;
   color: #6c63ff;
-  font-weight: bold;
+  font-weight: bold
 }
 
 /* 타이머 원형 스타일 */
@@ -99,20 +108,20 @@ body {
 
 .circle-background {
   fill: none;
-  stroke: #e0e0e0; /* 배경색 */
+  stroke: #E7F2FF; /* 배경색 */
   stroke-width: 14;
 }
 
 .circle-progress {
   fill: none;
-  stroke: #6c63ff; /* 진행 바 색상 */
+  stroke: #9760E9; /* 진행 바 색상 */
   stroke-width: 14;
   stroke-linecap: round;
   stroke-dasharray: 691;
   transition: stroke-dashoffset 1.3s linear;
 }
 
-.timer-number {
+.timer-number1 {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -120,20 +129,11 @@ body {
   font-size: 68px;
   font-weight: 600;
   font-weight: bold;
-  color: #0400FF;
+  color : #C400D6;
   line-height: normal;
   font-style: normal;
   font-family: Pretendard;
 }
-
-.highlight {
-  color: solid/indigo; /* 원하는 색상 */
-  font-weight: bold; /* 강조를 위해 굵게 설정 */
-}
-.think{
-  color : #6A6A6A;
-}
-
 /* 1800px 이하 노트북/데스크탑
 @media (max-width: 1800px) {
   .progress-bar {

@@ -28,6 +28,7 @@ body {
   overflow: hidden;
   left: 237px;
 }
+
 .progress-dots .dot {
   width: 20px;
   height: 20px;
@@ -64,19 +65,22 @@ body {
   /* margin-bottom: 78px; */
 }
 
-.question-title {
+.question-title3 {
   position: relative; 
   top: 0px;  
+  color: content/standard/secondary;
+  font-family: Pretendard;
   font-style: normal;
   line-height: normal;
+  /* marginbottom: 77px; */
 }
 
-.question-text2 {
+.question-text3 {
   position: relative; 
-  font-size: 30px;
-  top: 40px; 
-  margin-bottom: 20px;
-   font-family : 'Pretendard', sans-serif;
+  font-size: 34px;
+  top: 45px; 
+  margin-bottom: 30px;
+   font-family: Pretendard;
 }
 .think-image{
   position: relative;
@@ -104,7 +108,7 @@ body {
 
 .circle-background {
   fill: none;
-  stroke: #E7F2FF; /* 배경색 */
+  stroke: #e0e0e0; /* 배경색 */
   stroke-width: 14;
 }
 

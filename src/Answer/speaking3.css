@@ -28,8 +28,9 @@ body {
   overflow: hidden;
   left: 237px;
 }
+
 .progress-dots .dot {
-  width: 20px;
+   width: 20px;
   height: 20px;
   border-radius: 50%;
   background: #e0e0e0;
@@ -38,11 +39,9 @@ body {
   transition: background 0.7s cubic-bezier(.4,2,.6,1);
 }
 
-/* 각 점에 순서대로 색상 적용 */
-.progress-dots .dot-filled.dot1 { background: #5772EB; }
-.progress-dots .dot-filled.dot2 { background: #7769EA; }
-.progress-dots .dot-filled.dot3 { background: #965FE9; }
-.progress-dots .dot-filled.dot4 { background: #B757E8; }
+.progress-dots .dot-filled {
+    background: linear-gradient(90deg, #5772EB 0%, #7769EA 33%, #965FE9 66%, #B757E8 100%);
+}
 
 .progress {
   height: 100%;
@@ -64,23 +63,26 @@ body {
   /* margin-bottom: 78px; */
 }
 
-.question-title {
+.question-title3 {
   position: relative; 
   top: 0px;  
+  color: content/standard/secondary;
+  font-family: Pretendard;
   font-style: normal;
   line-height: normal;
+  /* marginbottom: 77px; */
 }
 
-.question-text2 {
+.question-text3 {
   position: relative; 
-  font-size: 30px;
-  top: 40px; 
-  margin-bottom: 20px;
-   font-family : 'Pretendard', sans-serif;
+  font-size: 34px;
+  top: 45px; 
+  margin-bottom: 30px;
+   font-family: Pretendard;
 }
 .think-image{
   position: relative;
-  top: 40px;
+  top: 60px;
 }
 
 .timer-text {
@@ -108,9 +110,9 @@ body {
   stroke-width: 14;
 }
 
-.circle-progress1 {
+.circle-progress {
   fill: none;
-  stroke: #5A72FF; /* 진행 바 색상 */
+  stroke: #9760E9; /* 진행 바 색상 */
   stroke-width: 14;
   stroke-linecap: round;
   stroke-dasharray: 691;

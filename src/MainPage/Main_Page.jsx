@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // 추가
 import "./Main_Page.css"; 
 import name from "./main_logo.png"; 
 
 const Main_Page = () => {
+  const navigate = useNavigate(); // 추가
+
   return (
     <div className="main-container">
       <div className="main-content">
@@ -14,6 +17,7 @@ const Main_Page = () => {
           className="start-button"
           onMouseOver={(e) => e.target.classList.add("hover")}
           onMouseOut={(e) => e.target.classList.remove("hover")}
+          onClick={() => navigate("/information")} // 추가
         >
           시작하기 &gt;
         </button>
