@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './speaking.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import Question1 from '../Question/title_1.svg';
 import Think from './answer_1.svg';
 function Speaking() {
-  
-  const [progress] = useState(34); // 0%에서 시작!  
+
+  const location = useLocation();
+  const question = location.state?.question|| "질문이 없습니다.";
+  const [progress] = useState(34); 
   const [timeLeft, setTimeLeft] = useState(10); // 타이머 초기값
   const navigate = useNavigate();
 
@@ -18,7 +20,7 @@ function Speaking() {
           clearInterval(timerInterval); 
           navigate('/question2'); // 타이머 종료 후 페이지 이동 
         }
-        return prev > 0 ? prev - 1 : 0; // 타이머 감소
+        return prev > 0 ? prev - 1 : 0; // 타이머 ,감소
       }); 
     }, 1200);
 
@@ -54,9 +56,9 @@ function Speaking() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문1" className="question-title" />
-        <p className="question-text">맨홀 뚜껑은 왜 원형일까요?</p>
+        <p className="question-text2">{question}</p>
         <p className="timer-text">
-          <img src={Think} alt="생각하는 이미지" className="think-image" />
+          <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
       </div>
       <div className="timer-circle">
