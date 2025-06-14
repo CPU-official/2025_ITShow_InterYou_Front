@@ -1,31 +1,85 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 추가
+import { useNavigate } from "react-router-dom";
 import './ModalNotification.css';
+import Warning from './Warning.jsx';
+
+// ------------------- ✨ 백엔드 연결 ✨ -------------------
+const API_BASE_URL = "http://3.39.189.31:3000";
 
 function Information_2({ onClose }) {
-
-  // 채크 박스 유뮤 확인
   const [agree, setAgreed] = useState(false);
   const checkBoxChange = (e) => {
     setAgreed(e.target.checked);
   };
 
-  // 이름 입력
-  const [name, setName] = useState(""); //name은 입력 받는 이름의 상태
+  const [name, setName] = useState("");
   const onChange = (e) => {
-    setName(e.target.value); // 입력한 값이 setName e.target.value가 사용자가 타이핑한 이름
+    setName(e.target.value);
   };
 
-  const navigate = useNavigate(); // 추가
+  // 경고 모달 상태 관리
+  const [showWarningModal, setShowWarningModal] = useState(false);
+  const [warningModalImage, setWarningModalImage] = useState('');
+
+  const navigate = useNavigate();
+
+  // 경고 모달 표시 함수
+  const showCustomWarning = (imagePath) => {
+    setWarningModalImage(imagePath);
+    setShowWarningModal(true);
+  };
+
+  // 경고 모달 닫기 함수
+  const closeCustomWarning = () => {
+    setShowWarningModal(false);
+    setWarningModalImage('');
+  };
 
   // 테스트 시작하기 버튼
-  const testButtonClick = () => {
+  const testButtonClick = async () => { // <--- async 키워드 추가
     if (!agree) {
-      alert("촬영 동의에 체크해 주세요.");
+      showCustomWarning('/img/info_alert_check.svg');
+      console.log("체크없음")
       return;
     }
-    navigate("/question");
-  };
+
+    // ------------------- ✨ 이름 API 시작 ✨ -------------------
+    if (name.trim() === "") { // 이름이 비어있는지 확인
+      showCustomWarning('/img/test.png');
+      console.log("이름 빔");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/`, {
+        method: "POST", // 데이터를 생성하므로 POST 메서드 사용
+        headers: {
+          "Content-Type": "application/json", // JSON 형식으로 데이터를 보낸다고 명시
+        },
+        body: JSON.stringify({ name: name }), // 사용자가 입력한 이름을 JSON 문자열로 변환하여 전송
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        // HTTP 상태 코드에 따라 다른 오류 메시지 표시
+        if (response.status === 409) {
+          showCustomWarning('/img/info_alert_duplication.svg'); // 중복 이름 알림
+          console.log("이름 중복임")
+        }
+        throw new Error(errorData.detail || "이름 저장 실패");
+      }
+
+      const data = await response.json();
+      console.log("이름 저장 성공:", data);
+      localStorage.setItem("name", name);
+      console.log("로컬 저장 성공!")
+      // 성공적으로 저장되면 다음 페이지로 이동
+      navigate("/question");
+
+    } catch (error) {
+      console.error("이름 저장 중 오류 발생:", error);
+    }
+  }; // ----------------------이름 API 끝--------------------------- 
 
   return (
     <div className="modalOvelay" onClick={onClose}>
@@ -63,6 +117,13 @@ function Information_2({ onClose }) {
           </button>
         </div>
       </div>
+      {/* 경고 모달 조건부 렌더링 */}
+      {showWarningModal && (
+        <Warning
+          imageUrl={warningModalImage}
+          onClose={closeCustomWarning}
+        />
+      )}
     </div>
   );
 }
