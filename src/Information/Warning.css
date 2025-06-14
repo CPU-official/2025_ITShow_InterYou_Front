@@ -1,0 +1,72 @@
+.warning-modal-overlay {
+    position: fixed;
+    /* 뷰포트에 고정 */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    /* 뷰포트 너비 전체 */
+    height: 100vh;
+    /* 뷰포트 높이 전체 */
+    display: flex;
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 (필요하다면) */
+    z-index: 1000;
+    /* 다른 요소 위에 표시 */
+}
+
+.warning-modal-content {
+    border-style: none;
+    position: fixed;
+    /* 특정 위치에 고정 */
+    top: 50%;
+    left: 50%;
+    width: 686.8649px;
+    height: 443.4054px;
+    transform: translate(-50%, -50%);
+    background: none;
+    padding: 0;
+    /* 패딩 제거 */
+    max-width: none;
+    /* 최대 너비 제한 해제 */
+    max-height: none;
+    /* 최대 높이 제한 해제 */
+}
+
+.warning-modal-content img {
+    max-width: 100%;
+    /* 이미지가 모달 컨텐츠에 맞게 조절 */
+    height: auto;
+    /* 비율 유지 */
+    display: block;
+    /* 이미지 아래 공백 제거 */
+}
+
+/* 닫기 버튼 스타일 */
+.close-button {
+    color: white;
+    font-family: var(--Family, Pretendard);
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34.523px;
+    /* 140% */
+    letter-spacing: -0.493px;
+    font-family: "Pretendard, Bold";
+    position: relative;
+    margin-left: 340px;
+    bottom: 90px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    width: 256px;
+    height: 54px;
+    padding: 10px 106px;
+    align-items: center;
+    gap: 12.329px;
+    flex-shrink: 0;
+    border-radius: 29.591px;
+    border-style: none;
+    z-index: 1001;
+    background: rgba(91, 89, 222, 1);
+}
