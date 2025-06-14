@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './speaking3.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import Question1 from '../Question/title_3.svg';
 import Think from './answer_1.svg';
 function Speaking3() {
   
+  const location3 = useLocation();
+  const question3 = location3.state?.question || "질문이 없습니다."; // 질문 가져오기
   const [progress] = useState(100);
   const [timeLeft, setTimeLeft] = useState(10); // 타이머 초기값
   const navigate = useNavigate();
-
+  
 
 
   useEffect(() => {
@@ -46,7 +48,7 @@ const dotPercents = [0, 33, 66, 99];
         key={idx}
         className={`dot dot${idx + 1} ${progress >= percent ? "dot-filled" : ""}`}
         style={{
-          transition: "background 0.7s cubic-bezier(.4,2,.6,1)"
+          transition: "background 0.7s cubic-bezier(.4,2, .6,1)"
         }}
       />
     ))}
@@ -54,9 +56,9 @@ const dotPercents = [0, 33, 66, 99];
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문3" className="question-title3" />
-        <p className="question-text3">빨간 벽돌을 건축자재 외에 어떤 용도로 사용할 수 있을까요?</p>
+        <p className="question-text2">{question3}</p>
         <p className="timer-text">
-          <img src={Think} alt="생각하는 이미지" className="think-image" />
+          <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
       </div>
       <div className="timer-circle">

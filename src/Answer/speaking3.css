@@ -78,7 +78,7 @@ body {
   font-size: 34px;
   top: 45px; 
   margin-bottom: 30px;
-   font-family: Pretendard;
+   font-family : Pretendard, sans-serif;
 }
 .think-image{
   position: relative;

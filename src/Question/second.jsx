@@ -3,11 +3,14 @@ import './second.css';
 import { useNavigate } from 'react-router-dom';
 import Question1 from './title_2.svg';
 import Think from './think_1.svg';
+import give from './Give';
+
 function Question2() {
   
   const [progress, setProgress] = useState(35); // 0%에서 시작!  
   const [timeLeft, setTimeLeft] = useState(5); // 타이머 초기값
   const navigate = useNavigate();
+  const shuffledQuestions = give(); // 랜덤 질문 가져오기
 
   useEffect(() => {
     // 진행바 하이라이팅 효과
@@ -20,7 +23,7 @@ function Question2() {
       setTimeLeft((prev) => {
         if (prev === 0) {
           clearInterval(timerInterval); 
-          navigate('/speaking2'); // 타이머 종료 후 페이지 이동 
+          navigate('/speaking2', { state: { question: shuffledQuestions[1] } }); // 타이머 종료 후 페이지 이동 
         }
         return prev > 0 ? prev - 1 : 0; // 타이머 감소
       }); 
@@ -29,7 +32,7 @@ function Question2() {
     return () => {
       clearInterval(timerInterval); // 컴포넌트 언마운트 시 타이머 정리
     };  
-  }, [navigate]);
+  }, [navigate, shuffledQuestions]);
 
   const circleRadius = 110; // 반지름   
   const circleCircumference = 2 * Math.PI * circleRadius; // 원 둘레
@@ -59,9 +62,9 @@ function Question2() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문2" className="question-title2" />
-        <p className="question-text2">만약 산타클로스가 된다면, 전 세계 어린이들에게 어떻게 선물을 나눠줄 것인가요?</p>
+       <p className="question-text2">{shuffledQuestions[1]}</p>
         <p className="timer-text">
-          <img src={Think} alt="생각하는 이미지" className="think-image" />
+          <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
       </div>
       <div className="timer-circle">

@@ -89,18 +89,18 @@ body {
   top : -0px;
 }
 /* 문제 유형형 */
-.question-text {
-  font-size: 40px;
-  top: 165px;
-  margin-bottom: 78px;
-  color: #000;
+.question-text{
+  top : 50px; /* y 좌표 */
+  /* word-break: break-all;      단어 단위로 줄바꿈 (한글에 적합) */
+  /* white-space: pre-line; */
+  word-wrap: break-word;     
+  line-height: 1.3;          /* 줄 간격 넉넉하게 */
+  font-size: 30px;           /* 필요시 폰트 크기 조정 */
+  /* padding: 0 24px;           좌우 여백 */
+  max-width: 100%;            
+  margin: 0 auto;
   font-family : 'Pretendard', sans-serif;
-  font-size: 40px;
-  font-style: normal;
-  line-height: 31.256px;
-  letter-spacing: -0.8px;
 }
-
 /*  */
 .timer-text {
   font-size: 24px;

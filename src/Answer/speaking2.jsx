@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './speaking2.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import Question1 from '../Question/title_2.svg';
 import Think from './answer_1.svg';
 function Speaking2() {
   
+  const location2 = useLocation();
+  const question2 = location2.state?.question|| "질문이 없습니다.";
   const [progress] = useState(67);
   const [timeLeft, setTimeLeft] = useState(10); // 타이머 초기값
   const navigate = useNavigate();
@@ -56,9 +58,9 @@ function Speaking2() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문2" className="question-title2" />
-        <p className="question-text2">만약 산타클로스가 된다면, 전 세계 어린이들에게 어떻게 선물을 나눠줄 것인가요?</p>
+        <p className="question-text2">{question2}</p>
         <p className="timer-text">
-          <img src={Think} alt="생각하는 이미지" className="think-image" />
+          <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
       </div>
       <div className="timer-circle">
