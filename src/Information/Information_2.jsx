@@ -1,7 +1,9 @@
+// Information_2.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ModalNotification.css';
 import Warning from './Warning.jsx';
+import Complete from "./Complete.jsx";
 
 // ------------------- ✨ 백엔드 연결 ✨ -------------------
 const API_BASE_URL = "http://3.39.189.31:3000";
@@ -21,6 +23,9 @@ function Information_2({ onClose }) {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [warningModalImage, setWarningModalImage] = useState('');
 
+  // Complete 모달 상태 관리
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
+
   const navigate = useNavigate();
 
   // 경고 모달 표시 함수
@@ -35,16 +40,26 @@ function Information_2({ onClose }) {
     setWarningModalImage('');
   };
 
+  // Complete 모달 표시 함수
+  const showComplete = () => {
+    setShowCompleteModal(true);
+  };
+
+  // Complete 모달에서 '확인' 버튼 클릭 시 호출될 함수
+  const handleCompleteConfirm = () => {
+    setShowCompleteModal(false); // Complete 모달 닫기
+    navigate("/question1"); // 다음 페이지로 이동
+  };
+
   // 테스트 시작하기 버튼
-  const testButtonClick = async () => { // <--- async 키워드 추가
+  const testButtonClick = async () => {
     if (!agree) {
       showCustomWarning('/img/info_alert_check.svg');
-      console.log("체크없음")
+      console.log("체크없음");
       return;
     }
 
-    // ------------------- ✨ 이름 API 시작 ✨ -------------------
-    if (name.trim() === "") { // 이름이 비어있는지 확인
+    else if (name.trim() === "") {
       showCustomWarning('/img/test.png');
       console.log("이름 빔");
       return;
@@ -52,34 +67,36 @@ function Information_2({ onClose }) {
 
     try {
       const response = await fetch(`${API_BASE_URL}/users/`, {
-        method: "POST", // 데이터를 생성하므로 POST 메서드 사용
+        method: "POST",
         headers: {
-          "Content-Type": "application/json", // JSON 형식으로 데이터를 보낸다고 명시
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: name }), // 사용자가 입력한 이름을 JSON 문자열로 변환하여 전송
+        body: JSON.stringify({ name: name }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        // HTTP 상태 코드에 따라 다른 오류 메시지 표시
         if (response.status === 409) {
-          showCustomWarning('/img/info_alert_duplication.svg'); // 중복 이름 알림
-          console.log("이름 중복임")
+          showCustomWarning('/img/info_alert_duplication.svg');
+          console.log("이름 중복임");
         }
         throw new Error(errorData.detail || "이름 저장 실패");
       }
 
-      const data = await response.json();
-      console.log("이름 저장 성공:", data);
-      localStorage.setItem("name", name);
-      console.log("로컬 저장 성공!")
-      // 성공적으로 저장되면 다음 페이지로 이동
-      navigate("/question");
+      else {
+        const data = await response.json();
+        console.log("이름 저장 성공:", data);
+        localStorage.setItem("name", name);
+        console.log("로컬 저장 성공!");
+
+        // 이름 저장 성공 시 Complete 모달 표시
+        showComplete();
+      }
 
     } catch (error) {
       console.error("이름 저장 중 오류 발생:", error);
     }
-  }; // ----------------------이름 API 끝--------------------------- 
+  };
 
   return (
     <div className="modalOvelay" onClick={onClose}>
@@ -122,6 +139,17 @@ function Information_2({ onClose }) {
         <Warning
           imageUrl={warningModalImage}
           onClose={closeCustomWarning}
+          // ✨ 추가: showWarningModal 상태를 isOpen prop으로 전달합니다. ✨
+          isOpen={showWarningModal}
+        />
+      )}
+      {/* Complete 모달 조건부 렌더링 추가 */}
+      {showCompleteModal && (
+        <Complete
+          // Complete 모달의 '확인' 버튼 클릭 시 호출될 함수를 props로 전달
+          onConfirm={handleCompleteConfirm}
+          // ✨ 추가: showCompleteModal 상태를 isOpen prop으로 전달합니다. ✨
+          isOpen={showCompleteModal}
         />
       )}
     </div>

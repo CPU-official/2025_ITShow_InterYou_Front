@@ -1,8 +1,8 @@
-// Warning.jsx
-import React, { useEffect, useState } from 'react';
-import './Warning.css';
+// Complete.jsx
+import React, { useEffect, useState } from 'react'; // useState와 useEffect 임포트
+import './Complete.css'; // Complete 모달을 위한 별도 CSS 파일이라고 가정합니다.
 
-function Warning({ imageUrl, onClose, isOpen }) {
+function Complete({ onConfirm, isOpen }) {
   const [shouldRender, setShouldRender] = useState(false); // DOM에 렌더링될지 여부
   const [isActive, setIsActive] = useState(false); // CSS 트랜지션 활성화 여부
 
@@ -11,14 +11,13 @@ function Warning({ imageUrl, onClose, isOpen }) {
     let hideTimer;
 
     if (isOpen) {
-      // 1. 먼저 DOM에 렌더링하도록 설정 (display: none 상태로)
+      // 1. 먼저 DOM에 렌더링하도록 설정 (CSS의 display: none 상태로)
       setShouldRender(true); 
 
       // 2. 다음 프레임에 display: flex로 변경하고 opacity 트랜지션 시작
       showTimer = setTimeout(() => {
         setIsActive(true); // .is-open 클래스 추가
       }, 50); // 아주 짧은 지연 (예: 50ms)을 주어 브라우저가 display 변경을 처리할 시간을 줍니다.
-              // 0ms도 가능하지만, 50ms가 더 안정적일 수 있습니다.
 
     } else {
       // 1. is-open 클래스를 제거하여 애니메이션 역재생 시작
@@ -42,17 +41,17 @@ function Warning({ imageUrl, onClose, isOpen }) {
   }
 
   // shouldRender가 true일 때만 렌더링하며, isActive에 따라 클래스 적용
-  const overlayClass = `warning-modal-overlay ${isActive ? 'is-open' : ''}`;
-  const contentClass = `warning-modal-content ${isActive ? 'is-open' : ''}`;
+  const overlayClass = `complete-modal-overlay ${isActive ? 'is-open' : ''}`;
+  const contentClass = `complete-modal-content ${isActive ? 'is-open' : ''}`;
 
   return (
-    <div className={overlayClass} onClick={onClose}>
+    <div className={overlayClass} onClick={onConfirm}>
       <div className={contentClass} onClick={(e) => e.stopPropagation()}>
-        <img src={imageUrl} alt="Warning" />
-        <button className="close-button" onClick={onClose}>확인</button>
+        <img src='/img/info_alert_ok.svg' alt='완료 알림' /> {/* alt 속성 추가 권장 */}
+        <button className="close-button" onClick={onConfirm}>확인</button>
       </div>
     </div>
   );
 }
 
-export default Warning;
+export default Complete;

@@ -12,13 +12,13 @@ import AnswerLoading from './answerLoading/answerLoading';
 import AnswerComplete from './answerComplete/answerComplete';
 
 const questionRoutes = [
-  { path: '/question', element: <Q1 /> },
+  { path: '/question1', element: <Q1 /> },
   { path: '/question2', element: <Q2 /> },
   { path: '/question3', element: <Q3 /> },
 ];
 
 const speakingRoutes = [
-  { path: '/speaking', element: <Speak /> },
+  { path: '/speaking1', element: <Speak /> },
   { path: '/speaking2', element: <Speak2 /> },
   { path: '/speaking3', element: <Speak3 /> },
 ];

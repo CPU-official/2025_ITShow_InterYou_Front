@@ -9,8 +9,9 @@
   
   .answer-loading-card {
     position: absolute;
-    left: 603px;
     top: 165px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 714px;
     height: 326px;
     background-color: #fff;
@@ -60,5 +61,14 @@
     overflow: visible;
     white-space: nowrap;
     color: #6a6a6a;
+  }
+  
+  .answer-loading-gif {
+    position: absolute;
+    top: 470px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px; 
+    height: auto;
   }
   
