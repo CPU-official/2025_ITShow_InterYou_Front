@@ -16,6 +16,8 @@ function Question2() {
     // 진행바 하이라이팅 효과
     const target = 67 ; // 목표 퍼센트 (페이지별로 25, 50, 75, 100 등)
     setTimeout(() => setProgress(target), 100); // 0.1초 후 애니메이션 시작
+    localStorage.setItem('q2', shuffledQuestions[1]);
+    console.log('두 번째 질문 (q2)이 로컬 스토리지에 저장되었습니다:', shuffledQuestions[1]);
   }, []);
 
   useEffect(() => {

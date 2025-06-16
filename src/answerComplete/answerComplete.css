@@ -8,12 +8,13 @@
     font-family: sans-serif;
   }
   
-  .answer-complete-card {
-    position: absolute;
-    left: 603px;  
-    top: 165px;
-    width: 714px;
-    height: 326px;
+.answer-complete-card {
+  position: absolute;
+  top: 165px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 714px;
+  height: 326px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -60,4 +61,14 @@
     padding: 0;
     white-space: nowrap;
   }
-  
+  .answer-complete-png {
+    position: absolute;
+    left: 818px;
+    top: 639px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 274px; 
+    height: 255px;
+  }
+
+ 

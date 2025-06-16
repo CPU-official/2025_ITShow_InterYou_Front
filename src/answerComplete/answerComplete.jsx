@@ -12,6 +12,10 @@ function AnswerComplete() {
           3초 뒤 결과창으로 이동합니다!
         </div>
       </div>
+      <img
+        src="/checkComplete.png"
+        className="answer-complete-png"
+      />
     </div>
   );
 }
