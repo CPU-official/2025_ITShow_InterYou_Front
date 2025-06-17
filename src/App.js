@@ -10,6 +10,7 @@ import Speak2 from './Answer/speaking2';
 import Speak3 from './Answer/speaking3';
 import AnswerLoading from './answerLoading/answerLoading';
 import AnswerComplete from './answerComplete/answerComplete';
+import Ranking from './Ranking/RankingPage';
 
 const questionRoutes = [
   { path: '/question1', element: <Q1 /> },

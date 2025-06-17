@@ -1,0 +1,219 @@
+.ranking-bg {
+  min-height: 100vh;
+  background: var(--back-soft, linear-gradient(90deg, #D2DBF9 0%, #B2C9FF 100%));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+
+}
+
+.ranking-header {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.ranking-logo {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+  user-select: none;
+  letter-spacing: -1px;
+}
+
+.logo-main {
+  color: #8f9cf0;
+  position: relative;
+  top: -20px;
+}
+
+.logo-sub {
+  color: #a084e8;
+}
+
+.ranking-title {
+color: #000;
+font-family: var(--Family, Pretendard);
+font-size: 50px;
+font-style: normal;
+font-weight: 500;
+line-height: 38.857px; /* 77.714% */
+letter-spacing: -1px;
+text-align: center;
+position: relative;
+top: -100px;
+margin-bottom: 84px;
+}
+
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  /* gap: 24px; */
+  margin-bottom: 32px;
+
+}
+
+.podium {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* podium 하단 정렬 */
+  border-radius: 10px;
+  min-width: 110px;
+  min-height: 80px;
+  padding: 0 0 12px 0; /* 위쪽 패딩 제거 */
+  box-shadow: 0 2px 10px rgba(120,120,200,0.04);
+  position: relative;
+}
+
+.podium.gold {
+display: flex;
+width: 227px;
+height: 209px;
+padding: 20px 44.777px 142.718px 45px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 3px;
+background: #FCECA7;
+box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.podium.silver {
+display: flex;
+width: 227px;
+height: 147px;
+padding: 17px 44.777px 83.718px 45px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 3px;
+background: #EEF2FF;
+box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.podium.bronze {
+display: flex;
+width: 227px;
+height: 104px;
+padding: 17px 44.777px 40.718px 45px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 3px;
+background: #FFD3A9;
+box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.medal {
+  margin-bottom: 17px; /* 이름과의 간격 */
+  position: absolute;
+  top: -165px; /* podium 위로 띄우기 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+
+.podium-name1 {
+  color: #000;
+font-family: Pretendard;
+font-size: 24.359px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+  position: relative;
+  top: 0px;
+background: #FFDC41;
+  padding: 8px 24px;
+  border-radius: 16px;
+  z-index: 1;
+}
+
+.podium-name2 {
+
+ color: #000;
+font-family: Pretendard;
+font-size: 24.359px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+  position: relative;
+  top: 0px;
+background: #DAE3E8;
+  padding: 8px 24px;
+  border-radius: 16px;
+  z-index: 1;
+}
+
+.podium-name3 {
+color: #000;
+font-family: Pretendard;
+font-size: 24.359px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+  position: relative;
+  top: 0px;
+background: #FFB165;
+  padding: 8px 24px;
+  border-radius: 16px;
+  z-index: 1;
+}
+
+
+.ranking-table-wrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(120,120,200,0.08);
+  padding: 0 0 0 0;
+  margin-bottom: 32px;
+  width: 420px;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.ranking-table th, .ranking-table td {
+  padding: 12px 0;
+  text-align: center;
+}
+
+.ranking-table th {
+  background: #f4f4ff;
+  font-weight: bold;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.ranking-table tr:not(:first-child) td {
+  border-top: 1px solid #f0f0f0;
+}
+
+.score-link {
+  color: #8f9cf0;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.ranking-btn {
+  background: #7e6be8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ranking-btn:hover {
+  background: #a084e8;
+}
