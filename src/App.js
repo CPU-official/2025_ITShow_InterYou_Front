@@ -1,6 +1,6 @@
 import {Routes, Route } from "react-router-dom";
 import './App.css'; // App 컴포넌트의 스타일을 위한 CSS 파일
-// import MainPage from "./MainPage/Main_Page"; // Main_Page 컴포넌트 가져오기
+import MainPage from "./MainPage/Main_Page"; // Main_Page 컴포넌트 가져오기
 import Information from './Information/Information_1'; // Information 페이지
 import Q1 from './Question/first';
 import Q2 from './Question/second';
@@ -29,7 +29,7 @@ const speakingRoutes = [
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Wind />} />
+      <Route path="/" element={<MainPage />} />
       <Route path="/information" element={<Information />} />
       {questionRoutes.map(({ path, element }) => (
         <Route key={path} path={path} element={element} />

@@ -85,6 +85,7 @@ function Window() {
           imageSrc={qa.imageSrc}
         />
       ))}
+
      <div>
   <ResultSummary score={89.01} />
 </div>
