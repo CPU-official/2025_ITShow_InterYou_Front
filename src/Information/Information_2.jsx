@@ -60,7 +60,7 @@ function Information_2({ onClose }) {
     }
 
     else if (name.trim() === "") {
-      showCustomWarning('/img/test.png');
+      showCustomWarning('/img/info_alert_name.svg');
       console.log("이름 빔");
       return;
     }
