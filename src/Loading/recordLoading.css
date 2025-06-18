@@ -1,0 +1,91 @@
+/* RecordLoading.css */
+.record-loading-container {
+    background: linear-gradient(90deg, #B4B3FF 0%, #B4B3FF 25%, #B3E2FF 81%, #B3FAFF 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.loading-title,
+.success-title,
+.error-title {
+    color: #222;
+    margin-bottom: 15px;
+    font-size: 2.2em;
+}
+
+.error-title {
+    color: #d32f2f;
+}
+
+.loading-text,
+.result-preview,
+.redirect-message,
+.error-message {
+    font-size: 1.1em;
+    color: #6a6a6a;;
+    margin-bottom: 20px;
+}
+
+.spinner {
+    border: 14px solid #f3f3f3;
+    /* Light grey */
+    border-top: 14px solid #5A72FF;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    animation: spin 1s linear infinite;
+    margin-top: 510px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.answer-loading-card {
+    position: absolute;
+    top: 165px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 714px;
+    height: 326px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

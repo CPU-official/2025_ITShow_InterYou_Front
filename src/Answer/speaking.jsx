@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './speaking.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Question1 from '../Question/title_1.svg';
@@ -11,72 +11,115 @@ function Speaking() {
   const [timeLeft, setTimeLeft] = useState(10); // 타이머 초기값
   const navigate = useNavigate();
   const [isRecordingDone, setIsRecordingDone] = useState(false); // 녹음 완료 상태 추가
+  const [isRecording, setIsRecording] = useState(false); // 녹음 시작 상태 추가
+
+  const mediaRecorderRef = useRef(null); // MediaRecorder 인스턴스를 저장할 ref
+  const audioChunksRef = useRef([]); // 오디오 청크를 저장할 ref
+  const startTimeRef = useRef(0); // 녹음 시작 시간을 저장할 ref (타이머 기준)
+
 
   useEffect(() => {
-    // 타이머 인터벌 설정
-    const timerInterval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev > 0) {
-          return prev - 1;
-        } else {
-          // 타이머가 0이 되면 인터벌 중지 및 녹음 완료 상태 설정
-          clearInterval(timerInterval);
-          setIsRecordingDone(true); // 녹음 완료
-          return 0;
-        }
-      });
-    }, 1000); // 1초마다 감소하도록 수정 (원래 1200ms -> 1000ms)
+    let timerInterval;
+    const startRecording = async () => {
+      try {
+        // 마이크 접근 요청
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorderRef.current = new MediaRecorder(stream);
+        audioChunksRef.current = []; // 새로운 녹음 시작 전에 청크 초기화
 
+        mediaRecorderRef.current.ondataavailable = (event) => {
+          audioChunksRef.current.push(event.data);
+        };
+
+        mediaRecorderRef.current.onstop = () => {
+          console.log("녹음이 중지되었습니다.");
+          setIsRecordingDone(true); // 녹음 완료 상태 업데이트
+          // 스트림 트랙 중지 (마이크 아이콘 사라짐)
+          stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorderRef.current.start();
+        setIsRecording(true); // 녹음 시작 상태
+        console.log("녹음 시작!");
+
+        // 타이머 시작 시간 기록
+        startTimeRef.current = Date.now();
+
+        // 타이머 시작
+        timerInterval = setInterval(() => {
+          // 현재 시간과 시작 시간의 차이를 계산하여 경과 시간 측정
+          const elapsedTime = Math.floor((Date.now() - startTimeRef.current) / 1000);
+          const remainingTime = 10 - elapsedTime; // 총 10초에서 경과 시간 기
+
+          setTimeLeft(Math.max(0, remainingTime)); // 남은 시간이 0보다 작아지지 않도록 보정
+
+          if (remainingTime <= 0) {
+            clearInterval(timerInterval); // 타이머가 0이 되면 인터벌 클리어
+            if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+              mediaRecorderRef.current.stop(); // 녹음 중지
+            }
+          }
+        }, 100); // 100ms마다 체크하여 더 부드러운 업데이트 (선택 사항, 1000ms도 가능)
+
+      } catch (err) {
+        console.error("마이크 접근 오류:", err);
+        alert("마이크 접근 권한이 필요합니다. 브라우저 설정에서 허용해주세요.");
+        setIsRecording(false); // 녹음 시작 실패
+        setIsRecordingDone(true); // 오류 발생 시에도 진행을 위해 녹음 완료 상태로 설정 (다른 에러 처리 고려)
+        setTimeLeft(0); // 오류 발생 시 타이머도 0으로 설정
+        clearInterval(timerInterval); // 혹시 모를 타이머 클리어
+      }
+    };
+
+    // 컴포넌트 마운트 시 자동으로 녹음 시작
+    startRecording();
+
+    // 컴포넌트 언마운트 시 클린업
     return () => {
-      clearInterval(timerInterval); // 컴포넌트 언마운트 시 타이머 정리
+      clearInterval(timerInterval); // 타이머 정리
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop(); // 녹음 중이면 중지
+      }
+      if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
+        mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop()); // 스트림 정리
+      }
     };
   }, []); // 빈 의존성 배열로 컴포넌트 마운트 시 한 번만 실행
 
-  // isRecordingDone 상태가 true가 되면 음성 인식 API 호출
+  // 녹음 완료 상태(isRecordingDone)가 true가 되면 다음 페이지로 오디오 Blob 전달
   useEffect(() => {
-    if (isRecordingDone) {
-      console.log("10초 녹음이 완료되었습니다. 음성 인식 API를 호출합니다...");
-      const transcribeAudio = async () => {
-        try {
-          // FastAPI 서버의 transcribe_live 엔드포인트 호출
-          // 'http://127.0.0.1:8000'는 FastAPI 서버가 실행되는 주소에 맞게 변경하세요.
-          // 현재 FastAPI 코드에서는 duration=12로 설정되어 있으나, 클라이언트에서 직접 녹음하는 것이 아니므로
-          // 이 엔드포인트를 호출하면 서버가 자체적으로 12초간 녹음합니다.
-          const response = await fetch('http://127.0.0.1:8000/transcribe_live', {
-            method: 'POST', // FastAPI에서 POST로 정의되어 있으므로 POST 사용
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // 'duration' 파라미터는 쿼리 파라미터로 넘겨도 되지만, 여기서는 서버 기본값(12초)을 따릅니다.
-            // 만약 클라이언트에서 10초를 명시하고 싶다면:
-            // const response = await fetch('http://127.0.0.1:8000/transcribe_live?duration=10', { ... });
-          });
+    if (isRecordingDone && audioChunksRef.current.length > 0) {
+      const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+      console.log("녹음된 오디오 Blob:", audioBlob);
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          console.log("음성 인식 결과:", data.transcribed_text); // 인식된 텍스트 콘솔 출력
-
-          // 음성 인식 완료 후 다음 페이지로 이동
-          navigate('/question2');
-
-        } catch (error) {
-          console.error("음성 인식 API 호출 중 오류 발생:", error);
-          // 오류 발생 시에도 다음 페이지로 이동하거나, 사용자에게 알림을 줄 수 있습니다.
-          navigate('/question2'); // 오류 시에도 일단 다음 페이지로 이동하도록 설정
+      // 다음 페이지로 오디오 Blob을 state로 전달
+      navigate('/recordLoading', {
+        state: {
+          recordedAudioBlob: audioBlob,
+          question: question,
+          nextPage: '/question2',
+          answerName: 'q1_answer'
         }
-      };
-
-      transcribeAudio();
+      });
+    } else if (isRecordingDone && audioChunksRef.current.length === 0 && !isRecording) {
+      // 녹음 시작조차 안 된 상태에서 isRecordingDone이 true가 된 경우 (예: 마이크 권한 거부)
+      console.warn("녹음된 오디오 데이터가 없어 다음 페이지로 넘어갑니다.");
+      navigate('/recordLoading',
+        {
+          state:
+          {
+            question: question,
+            nextPage: '/question2',
+            answerName: 'q1_answer'
+          }
+        });
     }
-  }, [isRecordingDone, navigate]); // isRecordingDone이 변경될 때만 실행
+  }, [isRecordingDone, navigate, question, isRecording]); // 의존성 배열에 question, isRecording 추가
 
   const circleRadius = 110; // 반지름
   const circleCircumference = 2 * Math.PI * circleRadius; // 원 둘레
 
-  const dotPercents = [0, 33, 66, 99];
+  const dotPercents = [0, 33, 66, 99]; // 진행률에 따른 점 활성화 (기존 로직 유지)
 
   return (
     <div className="start-container">
@@ -117,10 +160,8 @@ function Speaking() {
             cx="122"
             cy="118"
             r={circleRadius}
-            style={{
-              // 10초 타이머에 맞춰 strokeDashoffset 계산 수정
-              strokeDashoffset: circleCircumference * (timeLeft / 10),
-            }}
+            strokeDasharray={circleCircumference}
+            strokeDashoffset={circleCircumference * (timeLeft / 10)} // 10초 타이머에 맞춰 계산
           ></circle>
         </svg>
         <span className="timer-number1">{timeLeft}</span>
