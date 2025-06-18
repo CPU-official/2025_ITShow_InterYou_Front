@@ -3,6 +3,7 @@
         transform: translateY(-30px);
     }
 }
+
 body, html, #root {
   height: 100%;
   margin: 0;
@@ -14,6 +15,7 @@ body, html, #root {
   width: 100vw;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+   scroll-behavior: smooth;
   background: var(--logo2, linear-gradient(180deg, #E1E9FF 0%, #A5DCFF 100%));
 }
 
@@ -36,6 +38,7 @@ background: var(--logo2, linear-gradient(180deg, #E1E9FF 0%, #A5DCFF 100%));
   margin-bottom: 80px;
   letter-spacing: -0.02em;
 }
+
 .result-highlight {
   color: #2894f7;
 font-family: var(--Family, Pretendard);
@@ -45,6 +48,7 @@ font-weight: 500;
 line-height: 38.857px; /* 48.571% */
 letter-spacing: -1.6px;
 }
+
 .result-rest {
 color: #000;
 font-family: var(--Family, Pretendard);
@@ -54,12 +58,14 @@ font-weight: 500;
 line-height: 38.857px;
 letter-spacing: -1.6px;
 }
+
 .result-arrow {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
 }
+
 .arrow-bar {
   width: 60px;
   height: 12px;
@@ -67,6 +73,7 @@ letter-spacing: -1.6px;
   border-radius: 4px 4px 0 0;
   margin-bottom: 2px;
 }
+
 .arrow-down {
   width: 0;
   height: 0;
@@ -74,6 +81,7 @@ letter-spacing: -1.6px;
   border-right: 30px solid transparent;
   border-top: 40px solid #2894f7;
 }
+
 .result-scroll-text {
   animation: bounce 0.6s cubic-bezier(0, 0, 0.18, 0.99) infinite alternate;
   animation-duration: normal;
@@ -102,6 +110,7 @@ font-weight: 700;
 line-height: 24.992px; /* 59.504% */
 letter-spacing: -0.84px;
 }
+
 .question-text {
   color : #000000;
 font-family: var(--Family, Pretendard);
@@ -111,6 +120,7 @@ font-weight: 700;
 line-height: 24.992px;
 letter-spacing: -0.84px;
 }
+
 .answer-comments-row {
   display: flex;
   flex-direction: row;
@@ -118,14 +128,18 @@ letter-spacing: -0.84px;
   align-items: flex-start;
   width: 70vw;
   gap: 40px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
+  position: relative;
+  top: 130px;
 }
+
 .answer-comments-col {
   flex: 1.3;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
+
 .your-answer-title {
   color: #2894f7;
 font-family: Pretendard;
@@ -135,6 +149,7 @@ font-weight: 700;
 line-height: 19.694px; /* 77.714% */
 letter-spacing: -0.507px;
 }
+
 .your-answer-content  {
  display: flex;
 width: 708.77px;
@@ -146,8 +161,9 @@ gap: 21.898px;
 flex-shrink: 0;
 border-radius: 18.744px;
 background: #F9FCFF;
-margin-bottom: 43px;
+margin-bottom: 33px;
 }
+
 .ai-comments-content{
   display: flex;
 width: 708.77px;
@@ -160,6 +176,7 @@ flex-shrink: 0;
 border-radius: 18.744px;
 background: #F9FCFF;
 }
+
 .ai-comments-title {
 color: #7C67EA;
 font-family: Pretendard;
@@ -169,12 +186,14 @@ font-weight: 700;
 line-height: 19.694px; /* 77.714% */
 letter-spacing: -0.507px;
 }
+
 .answer-image-col {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .answer-question{
   color: #000;
 font-family: var(--Family, Pretendard);
@@ -184,6 +203,7 @@ font-weight: 500;
 line-height: 24.992px; /* 110.122% */
 letter-spacing: -0.454px;
 }
+
 .ai-answer{
   color: #000;
 font-family: var(--Family, Pretendard);
@@ -195,11 +215,75 @@ letter-spacing: -0.454px;
 }
 
 .profile-image {
-  width: 598px;
-  height: 483px;
+  width: 500px;
+  height: 400px;
   background: #bbb;
   border-radius: 18px;
   position: relative;
   left: 100px;
   /* 이미지 삽입 시 background-image 사용 */
 }
+
+.result-summary-box {
+ font-size: 1.6rem;
+  margin-bottom: 18px;
+}
+
+.score-row {
+  display: inline-flex;
+height: 218.799px;
+padding: 0px 202.828px 0px 198px;
+align-items: center;
+flex-shrink: 0;
+border-radius: 25.815px;
+background: #F0F4F7;
+box-shadow: 0px 4.303px 25.815px 0px rgba(112, 144, 176, 0.30);
+  position: relative;
+  left: 25%;
+  margin-top: 307px;
+}
+
+.score {
+  color: #057FFF;
+font-family: Pretendard;
+font-size: 79.724px;
+font-style: normal;
+font-weight: 500;
+line-height: 34.421px; /* 43.175% */
+letter-spacing: -1.594px;
+}
+
+.hundred{
+  color: #000;
+font-family: Pretendard;
+font-size: 50px;
+font-style: normal;
+font-weight: 500;
+line-height: 34.421px; /* 68.841% */
+letter-spacing: -1px;
+}
+
+.sum{
+  color: #000;
+font-family: Pretendard;
+font-size: 50px;
+font-style: normal;
+font-weight: 500;
+line-height: 34.421px; /* 68.841% */
+letter-spacing: -1px;
+}
+
+.ranking-btn {
+  background: #5B59DE;
+/* display: inline-flex; */
+padding: 24.286px 48.571px;
+justify-content: center;
+align-items: center;
+gap: 12.143px;
+border-radius: 17px;
+position: relative;
+top: 185px;
+left: 750px;
+
+} 
+
