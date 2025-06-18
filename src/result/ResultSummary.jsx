@@ -1,6 +1,6 @@
 // ResultSummary.js
 import React from 'react';
-import './window.css';
+import './resultScroll.css';
 
    function ResultSummary({ score }) {
   return (

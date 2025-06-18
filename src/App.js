@@ -9,10 +9,9 @@ import Speak from './Answer/speaking';
 import Speak2 from './Answer/speaking2';
 import Speak3 from './Answer/speaking3';
 import AnswerLoading from './answerLoading/answerLoading';
-import AnswerComplete from './answerComplete/answerComplete';
 import RecordLoading from './Loading/recordLoading';
 // import Ranking from './Ranking/RankingPage';
-import Wind from './result/window';
+// import ResultScroll from './Result/resultScroll';
 
 const questionRoutes = [
   { path: '/question1', element: <Q1 /> },
@@ -39,7 +38,6 @@ function App() {
       ))}
       <Route path = "/recordLoading" element={<RecordLoading/>}/>
       <Route path="/answerLoading" element={<AnswerLoading />} />
-      <Route path="/answerComplete" element={<AnswerComplete />} />
     </Routes>
   );
 }
