@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './answerLoading.css';
-import AnswerComplete from '../answerComplete/answerComplete';
-
+import ResultScroll from '../Result/resultScroll';
 function AnswerLoading() {
   const [showComplete, setShowComplete] = useState(false);
 
@@ -13,7 +12,7 @@ function AnswerLoading() {
   }, []);
 
   return showComplete ? (
-    <AnswerComplete />
+    <ResultScroll />
   ) : (
     <div className="answer-loading-container">
       <div className="answer-loading-card">
@@ -21,13 +20,14 @@ function AnswerLoading() {
           AI가 답변을 분석하는 중이에요!
         </div>
         <div className="answer-loading-wait">
-          조금만 기다려주세요!
+          분석이 끝나면 결과창으로 이동합니다!
         </div>
       </div>
 
       <img
         src="/Loading.gif"
         className="answer-loading-gif"
+        alt="load"
       />
     </div>
   );

@@ -78,7 +78,7 @@ function RecordLoading() {
                 console.error('음성 인식 API 호출 중 오류 발생:', err);
                 setError(`음성 인식 실패: ${err.message}`);
                 // 오류 발생 시에도 사용자에게 알리고 다음 페이지로 이동
-                navigate('/errorPage', {
+                navigate('/information', {
                     state: {
                         errorMessage: err.message,
                         originalQuestion: question
@@ -113,7 +113,7 @@ function RecordLoading() {
                         <>
                             <h1 className="error-title">오류 발생!</h1>
                             <p className="error-message">{error}</p>
-                            <button onClick={() => navigate('/speaking')}>다시 녹음하기</button>
+                            <button onClick={() => navigate('/')}>처음으로 이동</button>
                         </>
                     ) : (
                         <>
