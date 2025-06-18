@@ -23,6 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     justify-content: center;
   }
   
@@ -45,9 +46,10 @@
   
   .answer-loading-wait {
     position: absolute;
-    left: 251px;
+    left: 50%;
+    transform: translateX(-50%);
     top: 227px;
-    width: 214px;
+    width: auto;
     height: 29px;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
@@ -55,7 +57,7 @@
     font-size: 24.1313px;
     line-height: 24.1313px;
     letter-spacing: 0;
-    text-align: left;
+    text-align: center;
     margin: 0;
     padding: 0;
     overflow: visible;
@@ -71,4 +73,3 @@
     width: 900px; 
     height: auto;
   }
-  
