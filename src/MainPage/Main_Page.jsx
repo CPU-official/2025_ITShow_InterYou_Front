@@ -9,9 +9,7 @@ const Main_Page = () => {
   return (
     <div className="main-container">
       <div className="main-content">
-        <h1 className="main-title">
           <img src={name} alt="로고" className="title" />
-        </h1>
         <p className="main-description">당신의 순발력을 테스트해보세요!</p>
         <button
           className="start-button"
