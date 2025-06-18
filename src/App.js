@@ -1,6 +1,6 @@
 import {Routes, Route } from "react-router-dom";
 import './App.css'; // App 컴포넌트의 스타일을 위한 CSS 파일
-import MainPage from "./MainPage/Main_Page"; // Main_Page 컴포넌트 가져오기
+// import MainPage from "./MainPage/Main_Page"; // Main_Page 컴포넌트 가져오기
 import Information from './Information/Information_1'; // Information 페이지
 import Q1 from './Question/first';
 import Q2 from './Question/second';
@@ -11,7 +11,8 @@ import Speak3 from './Answer/speaking3';
 import AnswerLoading from './answerLoading/answerLoading';
 import AnswerComplete from './answerComplete/answerComplete';
 import RecordLoading from './Loading/recordLoading';
-import Ranking from './Ranking/RankingPage';
+// import Ranking from './Ranking/RankingPage';
+import Wind from './result/window';
 
 const questionRoutes = [
   { path: '/question1', element: <Q1 /> },
@@ -28,7 +29,7 @@ const speakingRoutes = [
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<Wind />} />
       <Route path="/information" element={<Information />} />
       {questionRoutes.map(({ path, element }) => (
         <Route key={path} path={path} element={element} />
