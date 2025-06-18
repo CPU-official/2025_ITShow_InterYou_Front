@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음성 인식 테스트</title>
+    <style>
+        /* --- CSS 스타일 --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 30px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #status {
+            margin-top: 25px;
+            font-size: 1.1em;
+            color: #555;
+            min-height: 30px; /* 공간 확보 */
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            font-size: 1.2em;
+            color: #2e7d32;
+            word-break: break-word; /* 긴 단어 줄 바꿈 */
+            text-align: left;
+            min-height: 60px; /* 공간 확보 */
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>음성 인식 테스트</h1>
+        <p>아래 '녹음 시작' 버튼을 누르고 10초 동안 말해보세요.</p>
+        <button id="startRecording">녹음 시작 (10초)</button>
+        <p id="status">준비됨</p>
+        <h2>인식 결과:</h2>
+        <div id="result">여기에 인식된 텍스트가 표시됩니다.</div>
+    </div>
+
+    <script>
+        // --- JavaScript 로직 ---
+        const startRecordingButton = document.getElementById('startRecording');
+        const statusDiv = document.getElementById('status');
+        const resultDiv = document.getElementById('result');
+
+        let mediaRecorder;
+        let audioChunks = [];
+        const recordDuration = 10000; // 10초 (밀리초)
+        const backendApiUrl = 'http://127.0.0.1:8000/transcribe_audio_file'; // 백엔드 API 주소
+
+        // API 서버 상태 확인 함수
+        async function checkApiStatus() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    statusDiv.innerHTML = `<span class="error">API 오류: ${errorData.detail || response.statusText}</span>`;
+                    startRecordingButton.disabled = true;
+                    return false;
+                }
+                const data = await response.json();
+                if (data.message.includes("모델이 성공적으로 로드되었습니다")) {
+                    statusDiv.textContent = "API 서버 준비 완료!";
+                    startRecordingButton.disabled = false;
+                    return true;
+                } else {
+                    statusDiv.innerHTML = `<span class="error">API 모델 로딩 중... 잠시 후 다시 시도하세요.</span>`;
+                    startRecordingButton.disabled = true;
+                    return false;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<span class="error">API 서버에 연결할 수 없습니다. 서버가 실행 중인지 확인하세요.</span>`;
+                startRecordingButton.disabled = true;
+                console.error('API 상태 확인 실패:', error);
+                return false;
+            }
+        }
+
+        // 페이지 로드 시 API 상태 확인
+        window.addEventListener('load', checkApiStatus);
+
+        startRecordingButton.addEventListener('click', async () => {
+            if (!await checkApiStatus()) { // 녹음 전에 다시 한 번 API 상태 확인
+                return;
+            }
+
+            audioChunks = [];
+            statusDiv.textContent = '마이크 접근 요청 중...';
+            startRecordingButton.disabled = true;
+            resultDiv.textContent = '여기에 인식된 텍스트가 표시됩니다.';
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    statusDiv.textContent = '음성 인식 중... <span class="loading-spinner"></span>';
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // WAV 형식으로 Blob 생성
+                    console.log('녹음된 오디오 Blob:', audioBlob);
+
+                    // FormData를 사용하여 파일 전송
+                    const formData = new FormData();
+                    formData.append('audio_file', audioBlob, 'recording.wav'); // 'audio_file'은 백엔드에서 기대하는 필드 이름
+
+                    try {
+                        const response = await fetch(backendApiUrl, {
+                            method: 'POST',
+                            body: formData,
+                            // Content-Type 헤더는 FormData 사용 시 자동으로 설정됩니다.
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(`API 오류: ${errorData.detail || response.statusText}`);
+                        }
+
+                        const data = await response.json();
+                        resultDiv.textContent = data.transcribed_text || '인식된 텍스트가 없습니다.';
+                        statusDiv.textContent = '인식 완료!';
+
+                    } catch (error) {
+                        resultDiv.textContent = '음성 인식에 실패했습니다: ' + error.message;
+                        statusDiv.innerHTML = `<span class="error">오류 발생!</span>`;
+                        console.error('API 호출 오류:', error);
+                    } finally {
+                        startRecordingButton.disabled = false; // 다시 녹음 버튼 활성화
+                        // 스트림 트랙 중지 (마이크 아이콘 사라짐)
+                        stream.getTracks().forEach(track => track.stop());
+                    }
+                };
+
+                mediaRecorder.start();
+                statusDiv.textContent = `녹음 시작! ${recordDuration / 1000}초 동안 말씀해주세요.`;
+
+                // 10초 후에 녹음 중지
+                setTimeout(() => {
+                    if (mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                    }
+                }, recordDuration);
+
+            } catch (err) {
+                statusDiv.innerHTML = `<span class="error">마이크 접근 권한이 거부되었거나 오류가 발생했습니다: ${err.name || err.message}</span>`;
+                resultDiv.textContent = '마이크 사용을 허용해야 녹음할 수 있습니다.';
+                startRecordingButton.disabled = false;
+                console.error('마이크 접근 오류:', err);
+            }
+        });
+    </script>
+</body>
+</html>

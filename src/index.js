@@ -7,7 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // 스트릭 모드라 두 번 호출됨
+  <React.StrictMode> 
     <BrowserRouter> 
       <App />
     </BrowserRouter>
