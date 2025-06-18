@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './answerLoading.css';
-import ResultScroll from '../Result/resultScroll';
+import ResultScroll from '../result/resultScroll';
 function AnswerLoading() {
   const [showComplete, setShowComplete] = useState(false);
 
