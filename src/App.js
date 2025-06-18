@@ -10,6 +10,7 @@ import Speak2 from './Answer/speaking2';
 import Speak3 from './Answer/speaking3';
 import AnswerLoading from './answerLoading/answerLoading';
 import AnswerComplete from './answerComplete/answerComplete';
+import RecordLoading from './Loading/recordLoading';
 
 const questionRoutes = [
   { path: '/question1', element: <Q1 /> },
@@ -34,6 +35,7 @@ function App() {
       {speakingRoutes.map(({ path, element }) => (
         <Route key={path} path={path} element={element} />
       ))}
+      <Route path = "/recordLoading" element={<RecordLoading/>}/>
       <Route path="/answerLoading" element={<AnswerLoading />} />
       <Route path="/answerComplete" element={<AnswerComplete />} />
     </Routes>
