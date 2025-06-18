@@ -32,7 +32,7 @@ body {
 .progress-dots {
   position: absolute;
   top: 60px; /* 진행바 아래로 */
-  width: 85%;
+  width: 76%;
   display: flex;
   justify-content: space-between;
   align-items: center;
