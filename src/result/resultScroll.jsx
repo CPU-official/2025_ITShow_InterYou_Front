@@ -1,5 +1,5 @@
 import React from "react";
-import "./window.css";
+import "./resultScroll.css";
 import roll1 from './Group 1667.svg';
 import roll2 from './Group 1667(1).svg';
 import ResultSummary from "./ResultSummary";
