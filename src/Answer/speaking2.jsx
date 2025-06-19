@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './speaking2.css';
+import './SpeakingAll.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Question1 from '../Question/title_2.svg';
 import Think from './answer_1.svg';
@@ -52,7 +52,7 @@ function Speaking2() {
 
           setTimeLeft(Math.max(0, remainingTime)); // 남은 시간이 0보다 작아지지 않도록 보정
 
-          if (remainingTime <= 0) {
+          if (remainingTime < 0) {
             clearInterval(timerInterval); // 타이머가 0이 되면 인터벌 클리어
             if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
               mediaRecorderRef.current.stop(); // 녹음 중지

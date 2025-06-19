@@ -80,6 +80,8 @@ body {
   font-family: 'Pretendard', sans-serif;
   text-align: center;
   font-weight: 500; 
+   position: relative;
+  top: 30px;
 }
 
 .question-title {

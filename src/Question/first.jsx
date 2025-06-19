@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './first.css';
+import './QuestionAll.css';
 import { useNavigate } from 'react-router-dom';
 import Question1 from './title_1.svg';
 import Think from './think_1.svg';
@@ -25,7 +25,7 @@ function Question() {
       setTimeLeft((prev) => {
         if (prev === 0) {
           clearInterval(timerInterval);
-          navigate('/speaking1', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
+          //navigate('/speaking1', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
         }
         return prev > 0 ? prev - 1 : 0; // 타이머 감소
       });
@@ -61,7 +61,7 @@ function Question() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문1" className="question-title" />
-        <p className="question-text2">{shuffledQuestions[0]}</p>
+        <p className="question-text1234">{shuffledQuestions[0]}</p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>

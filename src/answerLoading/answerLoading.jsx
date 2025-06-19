@@ -42,15 +42,21 @@ function AnswerLoading() {
 
         const result = await response.json();
         console.log("AI 분석 결과:", result);
-        navigate("/resultScroll", { state: { feedback: result } });
+        localStorage.setItem("q1_feedback", (result.answer1_comment));
+        localStorage.setItem("q2_feedback", (result.answer2_comment));
+        localStorage.setItem("q3_feedback", (result.answer3_comment));
+        localStorage.setItem("total", (result.total_score));
 
+        
+        
+        navigate("/resultScroll", { state: { feedback: result } });
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
       }
     };
 
     sendToAI();
-  }, [navigate]);
+  }, [navigate,q1,q2,q3,q1_answer,q2_answer,q3_answer]);
 
   return (
     <div className="answer-loading-container">

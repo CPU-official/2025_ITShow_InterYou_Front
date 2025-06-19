@@ -1,39 +1,54 @@
-import whisper
-import io
 import os
+import json
 import tempfile
-from fastapi import FastAPI, UploadFile, File, HTTPException, status
-from pydantic import BaseModel
-import uvicorn
 import asyncio
-from fastapi.middleware.cors import CORSMiddleware
 import time
-import numpy as np # ✨ numpy 추가 ✨
-import soundfile as sf # ✨ soundfile 추가 ✨
+import whisper
+import google.generativeai as genai
+import numpy as np
+import soundfile as sf
+from fastapi import FastAPI, UploadFile, File, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+import uvicorn
 
-# FastAPI 애플리케이션 인스턴스 생성
-app = FastAPI(
-    title="음성 인식 API",
-    description="Whisper 모델을 사용하여 사용자가 업로드한 음성을 텍스트로 변환하는 API입니다.",
-    version="1.0.0"
+# .env 로드 및 Gemini 설정
+load_dotenv()
+gemini_api_key = os.getenv("GOOGLE_API_KEY")
+if not gemini_api_key:
+    raise ValueError("GEMINI_API_KEY 환경 변수가 설정되지 않았습니다.")
+genai.configure(api_key=gemini_api_key)
+gemini_model = genai.GenerativeModel(
+    'gemini-1.5-flash',
+    safety_settings=[
+        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+    ]
 )
 
-# --- CORS 설정 ---
+# FastAPI 앱 생성
+app = FastAPI(
+    title="InterYou 통합 백엔드",
+    description="Gemini 분석 및 Whisper 음성 인식 기능을 통합 제공",
+    version="2.0.0"
+)
+
+# CORS 설정
 origins = [
     "http://3.39.189.31:3000",
     "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:5500",
     "http://localhost:5501",
     "http://127.0.0.1",
-    "http://127.0.0.1:5501",
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://127.0.0.1:8000",
-    "http://localhost:8000",
     "http://127.0.0.1:3000",
-    "http://localhost:3000",
+    "http://127.0.0.1:8000",
     "null"
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -42,126 +57,162 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 전역 변수로 모델을 저장하여 한 번만 로드하도록 합니다.
+# Whisper 모델 전역 변수
 whisper_model = None
 model_loaded = False
 
-# 애플리케이션 시작 시 모델 로드
+# Whisper 모델 로드
 @app.on_event("startup")
 async def load_model_on_startup():
     global whisper_model, model_loaded
-    print("모델 로딩 중...")
-    start_time = time.time()
     try:
-        # 모델 로딩 시간 단축을 위해 tiny 또는 base 모델 고려 (성능 vs 정확도)
-        # 예시에서는 medium을 유지하되, 필요시 변경 가능
         whisper_model = whisper.load_model("medium")
         model_loaded = True
-        end_time = time.time()
-        loading_duration = end_time - start_time
-        print(f"모델 로딩 완료! 총 {loading_duration:.2f}초 소요되었습니다.")
-        print("Whisper 모델이 성공적으로 준비되었습니다.")
+        print("Whisper 모델 로드 완료.")
     except Exception as e:
-        print(f"모델 로딩 중 오류 발생: {e}")
-        # 모델 로딩 실패 시 애플리케이션 시작을 중단하거나, 경고를 명확히 표시
-        # 여기서는 모델이 로드되지 않았음을 알리는 상태를 유지합니다.
+        print("Whisper 모델 로드 실패:", e)
+
+# -------------------- 모델 정의 --------------------
+class AspectScore(BaseModel):
+    aspect: str
+    score: float
+
+class AnalyzeRequest(BaseModel):
+    question1: str
+    answer_text1: str
+    question2: str
+    answer_text2: str
+    question3: str
+    answer_text3: str
+
+class AnalyzeResponse(BaseModel):
+    answer1_comment: str
+    answer1_detailed_score: list[AspectScore]
+    answer2_comment: str
+    answer2_detailed_score: list[AspectScore]
+    answer3_comment: str
+    answer3_detailed_score: list[AspectScore]
+    total_score: float
 
 class TranscribeResponse(BaseModel):
     transcribed_text: str
+# --------------------------------------------------
 
-@app.get("/", summary="API 상태 확인")
-async def read_root():
-    """
-    API 서버의 상태를 확인합니다. Whisper 모델의 로드 상태를 반환합니다.
-    """
-    if model_loaded:
-        return {"message": "음성 인식 API 서버가 실행 중입니다. Whisper 모델이 성공적으로 로드되었습니다."}
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Whisper 모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요."
-        )
+# 루트 라우트
+@app.get("/")
+async def root():
+    return {"message": "InterYou 백엔드 API가 실행 중입니다."}
 
-@app.post("/transcribe_audio_file", response_model=TranscribeResponse, summary="음성 파일 업로드 및 텍스트 변환")
-async def transcribe_audio_file(audio_file: UploadFile = File(...)):
-    """
-    사용자가 녹음한 음성 파일을 업로드하면 Whisper 모델을 사용하여 텍스트로 변환합니다.
+# Gemini 기반 분석 API
+@app.post("/analyze_answers", response_model=AnalyzeResponse)
+async def analyze_answers(request: AnalyzeRequest):
+    prompt = f"""당신은 AI 면접 심사위원입니다.
+당신은 참가자의 답변 3개를 **창의성, 논리성** 기준으로 평가합니다.
 
-    - **`audio_file`**: 녹음된 오디오 파일 (MP3, WAV, FLAC 등 Whisper가 지원하는 형식).
-      권장 오디오 길이는 10초 내외입니다.
+---
 
-    **참고:** Whisper 모델은 다양한 오디오 형식을 지원하지만, 최상의 결과를 위해
-    16kHz, 모노 채널 WAV 또는 FLAC 파일을 권장합니다.
-    """
-    if not model_loaded:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Whisper 모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요."
-        )
+### 평가 기준
 
-    if not audio_file.content_type.startswith('audio/'):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="업로드된 파일이 오디오 형식이 아닙니다. 오디오 파일을 업로드해주세요."
-        )
+1. **창의성 (Creativity):** 답변이 얼마나 독특하고 새로웠는지
+2. **논리성 (Logic):** 답변이 얼마나 합리적이고 일관성 있는지를 평가
 
-    print(f"\n파일 수신: {audio_file.filename} ({audio_file.content_type})")
+---
 
-    # 임시 파일에 오디오 데이터를 저장
-    # Whisper 모델은 파일 경로를 직접 받거나 numpy 배열을 받을 수 있습니다.
-    # 여기서는 파일 경로를 사용하는 것이 메모리 효율성 면에서 유리할 수 있습니다.
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio_file:
-        try:
-            # 클라이언트가 업로드한 파일 스트림을 임시 파일에 직접 씁니다.
-            file_content = await audio_file.read()
-            temp_audio_file.write(file_content)
-            temp_audio_file_path = temp_audio_file.name
-        except Exception as e:
-            print(f"파일 쓰기 중 오류 발생: {e}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"파일을 처리하는 중 오류가 발생했습니다: {e}"
-            )
-    
-    transcribed_text = ""
+### 유의사항
+참가자의 답변들은 **음성 인식 결과로, 일부 단어나 문장 구조가 부정확할 수 있습니다.**
+발음 오류, 단어 생략, 이상한 문장 등 **음성 인식 특성에서 발생하는 오차를 감안하여**, 
+참가자의 **의도와 전체적인 맥락**을 고려해 평가해 주세요.
+
+---
+
+### 참가자 답변
+
+Q1: {request.question1}  
+A1: {request.answer_text1}
+
+Q2: {request.question2}  
+A2: {request.answer_text2}
+
+Q3: {request.question3}  
+A3: {request.answer_text3}
+
+---
+
+### 평가 방식
+
+- 각 답변에 대해 **창의성, 논리성** 점수를 부여합니다.
+- 각 점수는 반드시 **10 단위 정수**여야 하며, 범위는 **30, 40, 50, ..., 100**입니다.
+(예: 30, 40, 50, ..., 100 외의 숫자는 절대 사용하지 마세요)
+- - **총점은 전체 6개 점수의 평균**이며, 소수점 둘째 자리까지 계산합니다.
+---
+
+### 결과 출력 형식 (이 형식 외 어떤 텍스트도 포함하지 마세요)
+
+```json
+{{
+  "answer1_comment": "<답변에 대한 요약 피드백>",
+  "answer1_detailed_score": [
+    {{ "aspect": "창의성", "score": 90 }},
+    {{ "aspect": "논리성", "score": 80 }}
+  ],
+  "answer2_comment": "<답변에 대한 요약 피드백>",
+  "answer2_detailed_score": [
+    {{ "aspect": "창의성", "score": 80 }},
+    {{ "aspect": "논리성", "score": 80 }}
+  ],
+  "answer3_comment": "<답변에 대한 요약 피드백>",
+  "answer3_detailed_score": [
+    {{ "aspect": "창의성", "score": 70 }},
+    {{ "aspect": "논리성", "score": 90 }}
+  ],
+  "total_score": 56.66
+}}
+"""
     try:
-        # Whisper transcribe 또한 동기 방식으로 작동하므로, 비동기 컨텍스트에서 실행
-        loop = asyncio.get_event_loop()
-        
-        print("음성 인식 처리 중...")
-        result_start_time = time.time()
+        response = gemini_model.generate_content(prompt)
+        raw = response.text.strip()
 
-        # Whisper 모델은 파일 경로를 직접 처리할 수 있습니다.
-        # 또는 soundfile을 사용하여 numpy 배열로 로드 후 transcribe할 수도 있습니다.
-        # 여기서는 파일 경로를 직접 사용하는 방법을 선호합니다.
-        result = await loop.run_in_executor(
-            None,
-            lambda: whisper_model.transcribe(temp_audio_file_path, language="ko")
-        )
-        
-        result_end_time = time.time()
-        transcribe_duration = result_end_time - result_start_time
-        print(f"음성 인식 처리 완료! 총 {transcribe_duration:.2f}초 소요되었습니다.")
+        start = raw.find('{')
+        end = raw.rfind('}') + 1
+        if start == -1 or end == -1:
+            raise ValueError("유효한 JSON을 찾을 수 없습니다.")
 
-        transcribed_text = result["text"].strip()
-        print("최종 인식 결과:", transcribed_text)
-        print("-" * 50)
-        return TranscribeResponse(transcribed_text=transcribed_text)
+        json_string = raw[start:end]
+        if json_string.startswith("```json"):
+            json_string = json_string[7:].strip()
+        if json_string.endswith("```"):
+            json_string = json_string[:-3].strip()
 
+        parsed = json.loads(json_string)
+        return AnalyzeResponse(**parsed)
     except Exception as e:
-        print(f"음성 파일 처리 및 인식 중 오류 발생: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"음성 파일 인식 중 오류가 발생했습니다: {e}"
-        )
+        raise HTTPException(status_code=500, detail=f"AI 분석 중 오류: {e}")
+
+# Whisper 음성 인식 API
+@app.post("/transcribe_audio_file", response_model=TranscribeResponse)
+async def transcribe_audio_file(audio_file: UploadFile = File(...)):
+    if not model_loaded:
+        raise HTTPException(status_code=503, detail="Whisper 모델이 아직 로드되지 않았습니다.")
+
+    if not audio_file.content_type.startswith("audio/"):
+        raise HTTPException(status_code=400, detail="오디오 파일만 업로드 가능합니다.")
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
+        file_data = await audio_file.read()
+        temp_file.write(file_data)
+        temp_path = temp_file.name
+
+    try:
+        loop = asyncio.get_event_loop()
+        result = await loop.run_in_executor(None, lambda: whisper_model.transcribe(temp_path, language="ko"))
+        text = result["text"].strip()
+        return TranscribeResponse(transcribed_text=text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"음성 인식 실패: {e}")
     finally:
-        # 임시 파일 정리 (오류 발생 시에도 반드시 삭제)
-        if os.path.exists(temp_audio_file_path):
-            os.remove(temp_audio_file_path)
-            print(f"임시 파일 삭제됨: {temp_audio_file_path}")
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
 
 # 서버 실행
 if __name__ == "__main__":
-    # 운영 환경에서는 reload=True를 제거해야 합니다.
     uvicorn.run("recording:app", host="0.0.0.0", port=8000, reload=True)
-    # 'your_module_name'을 이 스크립트의 실제 파일명으로 바꿔주세요 (예: main.py -> "main:app")

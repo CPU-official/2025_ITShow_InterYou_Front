@@ -1,219 +1,152 @@
-.ranking-bg {
-  min-height: 100vh;
-  background: var(--back-soft, linear-gradient(90deg, #D2DBF9 0%, #B2C9FF 100%));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 0;
+/* RankingPage.css */
 
+.ranking-bg {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 모든 요소를 가로 중앙 정렬 */
+    background-color: #e0f2f7; /* 배경색 */
+    min-height: 100vh;
+    padding-bottom: 50px; /* 하단 여백 추가 */
 }
 
 .ranking-header {
-  width: 100%;
-  text-align: left;
-  margin-bottom: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
 }
 
 .ranking-logo {
-  font-size: 2.2rem;
-  font-weight: bold;
-  margin-bottom: 4px;
-  user-select: none;
-  letter-spacing: -1px;
+    margin-bottom: 20px;
 }
 
 .logo-main {
-  color: #8f9cf0;
-  position: relative;
-  top: -20px;
-}
-
-.logo-sub {
-  color: #a084e8;
+    width: 150px; /* 로고 크기 조절 */
+    height: auto;
 }
 
 .ranking-title {
-color: #000;
-font-family: var(--Family, Pretendard);
-font-size: 50px;
-font-style: normal;
-font-weight: 500;
-line-height: 38.857px; /* 77.714% */
-letter-spacing: -1px;
-text-align: center;
-position: relative;
-top: -100px;
-margin-bottom: 84px;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
 }
 
 .podium-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  /* gap: 24px; */
-  margin-bottom: 32px;
-
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 80%;
+    max-width: 700px;
+    height: 200px;
+    margin-bottom: 50px;
 }
 
 .podium {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end; /* podium 하단 정렬 */
-  border-radius: 10px;
-  min-width: 110px;
-  min-height: 80px;
-  padding: 0 0 12px 0; /* 위쪽 패딩 제거 */
-  box-shadow: 0 2px 10px rgba(120,120,200,0.04);
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 텍스트와 메달을 중앙으로 */
+    margin: 0 10px;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-top: 10px; /* 메달과 겹치지 않도록 */
 }
 
 .podium.gold {
-display: flex;
-width: 227px;
-height: 209px;
-padding: 20px 44.777px 142.718px 45px;
-justify-content: center;
-align-items: center;
-flex-shrink: 0;
-border-radius: 3px;
-background: #FCECA7;
-box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    height: 150px;
+    width: 120px;
+    background-color: #FFD700; /* Gold */
+    order: 2; /* 1등을 가운데로 */
 }
 
 .podium.silver {
-display: flex;
-width: 227px;
-height: 147px;
-padding: 17px 44.777px 83.718px 45px;
-justify-content: center;
-align-items: center;
-flex-shrink: 0;
-border-radius: 3px;
-background: #EEF2FF;
-box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    height: 120px;
+    width: 120px;
+    background-color: #C0C0C0; /* Silver */
+    order: 1; /* 2등을 왼쪽에 */
 }
 
 .podium.bronze {
-display: flex;
-width: 227px;
-height: 104px;
-padding: 17px 44.777px 40.718px 45px;
-justify-content: center;
-align-items: center;
-flex-shrink: 0;
-border-radius: 3px;
-background: #FFD3A9;
-box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    height: 90px;
+    width: 120px;
+    background-color: #CD7F32; /* Bronze */
+    order: 3; /* 3등을 오른쪽에 */
 }
 
 .medal {
-  margin-bottom: 17px; /* 이름과의 간격 */
-  position: absolute;
-  top: -165px; /* podium 위로 띄우기 */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
+    width: 70px; /* 메달 크기 */
+    height: 70px;
+    position: absolute;
+    top: -35px; /* 단상 위로 올림 */
 }
 
-
-.podium-name1 {
-  color: #000;
-font-family: Pretendard;
-font-size: 24.359px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-  position: relative;
-  top: 0px;
-background: #FFDC41;
-  padding: 8px 24px;
-  border-radius: 16px;
-  z-index: 1;
+.podium-name1, .podium-name2, .podium-name3 {
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-top: 40px; /* 메달과의 간격 */
+    font-size: 1.1em;
 }
 
-.podium-name2 {
-
- color: #000;
-font-family: Pretendard;
-font-size: 24.359px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-  position: relative;
-  top: 0px;
-background: #DAE3E8;
-  padding: 8px 24px;
-  border-radius: 16px;
-  z-index: 1;
+/* 랭킹 목록 박스 스타일 */
+.ranking-list-box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px;
+    padding: 20px;
+    margin-top: 30px; /* 단상 아래로 간격 */
 }
 
-.podium-name3 {
-color: #000;
-font-family: Pretendard;
-font-size: 24.359px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-  position: relative;
-  top: 0px;
-background: #FFB165;
-  padding: 8px 24px;
-  border-radius: 16px;
-  z-index: 1;
+.ranking-list-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #555;
 }
 
-
-.ranking-table-wrapper {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(120,120,200,0.08);
-  padding: 0 0 0 0;
-  margin-bottom: 32px;
-  width: 420px;
+.rank-header, .name-header, .score-header {
+    flex: 1;
+    text-align: center;
+}
+.name-header {
+    flex: 2; /* 이름 칸을 더 넓게 */
 }
 
-.ranking-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 1rem;
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed #f0f0f0;
+    align-items: center;
 }
 
-.ranking-table th, .ranking-table td {
-  padding: 12px 0;
-  text-align: center;
+.ranking-item:last-child {
+    border-bottom: none; /* 마지막 아이템에는 선 제거 */
 }
 
-.ranking-table th {
-  background: #f4f4ff;
-  font-weight: bold;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+.rank, .name, .score {
+    flex: 1;
+    text-align: center;
+    color: #000000;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: Pretendard;
 }
-
-.ranking-table tr:not(:first-child) td {
-  border-top: 1px solid #f0f0f0;
+.name {
+    flex: 2; /* 이름 칸을 더 넓게 */
+    font-weight: 500;
 }
-
-.score-link {
-  color: #8f9cf0;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.ranking-btn {
-  background: #7e6be8;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 14px 40px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.ranking-btn:hover {
-  background: #a084e8;
+.score {
+    font-size: 12px;
+    font-weight: bold;
+    color: #007bff; /* 점수 색상 */
 }
