@@ -4,6 +4,7 @@ import Logo from './logo.svg';
 import onest from './1.svg';
 import twost from './2.svg';
 import threest from './3.svg';
+import { useNavigate } from 'react-router-dom';
 
 const RankingPage = () => {
   const [rankingData, setRankingData] = useState([]);
@@ -51,6 +52,11 @@ const RankingPage = () => {
     fetchRanking();
   }, []);
 
+  const navigate = useNavigate(); 
+  const handleRankingClick1 = () => {
+    console.log("랭킹 버튼 클릭됨");
+    navigate('/'); 
+  };
   return (
     <div className="ranking-bg">
       <header className="ranking-header">
@@ -88,6 +94,8 @@ const RankingPage = () => {
           </div>
         ))}
       </div>
+
+      <button className="first button" onClick={handleRankingClick1}>처음으로</button>
     </div>
   );
 };
