@@ -25,7 +25,7 @@ function Question() {
       setTimeLeft((prev) => {
         if (prev === 0) {
           clearInterval(timerInterval);
-          //navigate('/speaking1', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
+          navigate('/speaking1', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
         }
         return prev > 0 ? prev - 1 : 0; // 타이머 감소
       });
