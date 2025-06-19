@@ -89,7 +89,7 @@ body {
   top : -0px;
 }
 /* 문제 유형 */
-.question-text1234 {
+.question-text123 {
   word-break: keep-all;      
   white-space: pre-line;
   line-height: 1.6; 
@@ -150,98 +150,3 @@ body {
   font-style: normal; 
   font-family: 'Pretendard', sans-serif;
 }
-
-/* @media (max-width: 1800px) {
-  .progress-bar {
-    width: 80vw;
-    left: 0;
-    margin-bottom: 162px;
-  }
-  .question-box { 
-    top : 40px;
-    width: 40vw;
-    min-height: 300px;
-    /* gap : 30px; */
-  /* }
-  .progress-dots{
-    width: 80%;
-  }
-  .question-title {
-    top : 50px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .progress-bar {
-    width: 90vw;
-    left: 0;
-    margin-bottom: 150x;
-  }
-  .progress-dots{
-    width: 90%;
-  }
-  .question-box {
-    width: 60vw;
-    height: auto;
-    min-height: 250px;
-  }
-  .timer-number {
-    font-size: 68px;
-  }
-}
-
-@media (max-width: 900px) {
-  .progress-bar {
-    width: 95vw;
-    height: 18px;
-    margin-bottom: 100px;
-  }
-  .progress-dots {
-    top: 50px;
-    width: 95%;
-  }
-  .question-box {
-    width: 55vw;
-    padding: 12px;
-    font-size: 18px;
-  }
-  .timer-number {
-    font-size: 38px;
-  }
-}
-
-@media (max-width: 600px) {
-  .progress-bar {
-    width: 98vw;
-    height: 12px;
-    margin-bottom: 24px;
-    border-radius: 10px;
-  }
-  .progress-dots {
-    top: 22px;
-    width: 92%;
-  }
-  .question-box {
-    width: 98vw;
-    padding: 8px;
-    font-size: 16px;
-    min-height: 120px;
-    margin-bottom: 24px;
-  }
-  .question-title {
-    font-size: 18px;
-    top: 18px;
-    margin-bottom: 24px;
-  }
-  .question-text {
-    font-size: 20px;
-    margin-bottom: 24px;
-  }
-  .timer-circle {
-    width: 120px;
-    height: 110px;
-  }
-  .timer-number {
-    font-size: 24px;
-  }
-} */ 

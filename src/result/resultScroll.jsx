@@ -47,10 +47,10 @@ const DownArrowIcon2 = () => (
 );
 
 const ResultSummary = ({ score }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const handleRankingClick = () => {
     console.log("랭킹 버튼 클릭됨");
-    navigate('/ranking'); 
+    navigate('/ranking');
   };
   return (
     <section className="section">
@@ -207,6 +207,35 @@ function ResultScroll() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
   }, [goToNextSection, goToPrevSection, isTransitioning]);
+  const API_BASE_URL = "http://3.39.189.31:3000";
+  // DB 업데이트를 위한 useEffect 훅 추가
+  useEffect(() => {
+    const updateScore = async () => {
+      if (userName && total) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/users/score`, { // API 엔드포인트에 맞게 경로 수정 필요
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: userName, score: parseFloat(total) }), // total을 float으로 변환
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || '점수 업데이트 실패');
+          }
+
+          const result = await response.json();
+          console.log('점수 업데이트 성공:', result);
+        } catch (error) {
+          console.error('점수 업데이트 중 오류 발생:', error.message);
+        }
+      }
+    };
+
+    updateScore();
+  }, []); // 컴포넌트 마운트 시 한 번만 실행
 
   return (
     <div className="scroll-container">

@@ -61,7 +61,7 @@ function Question() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문1" className="question-title" />
-        <p className="question-text1234">{shuffledQuestions[0]}</p>
+        <p className="question-text123">{shuffledQuestions[0]}</p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
