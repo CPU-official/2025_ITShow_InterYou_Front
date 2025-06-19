@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './third.css';
+import './QuestionAll.css';
 import { useNavigate } from 'react-router-dom';
 import Question1 from './title_3.svg';
 import Think from './think_1.svg';
@@ -18,7 +18,7 @@ function Question3() {
     setTimeout(() => setProgress(target), 100); // 0.1초 후 애니메이션 시작
     localStorage.setItem('q3', shuffledQuestions[2]);
     console.log('세 번째 질문 (q3)이 로컬 스토리지에 저장되었습니다:', shuffledQuestions[2]);
-  }, []);
+  }, [shuffledQuestions]);
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -63,7 +63,7 @@ function Question3() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문3" className="question-title3" />
-        <p className="question-text2">{shuffledQuestions[2]}</p>
+        <p className="question-text123">{shuffledQuestions[2]}</p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>

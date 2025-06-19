@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './first.css';
+import './QuestionAll.css';
 import { useNavigate } from 'react-router-dom';
 import Question1 from './title_1.svg';
 import Think from './think_1.svg';
@@ -18,14 +18,14 @@ function Question() {
     setTimeout(() => setProgress(target), 100); // 0.1초 후 애니메이션 시작
     localStorage.setItem('q1', shuffledQuestions[0]);
     console.log('첫 번째 질문 (q1)이 로컬 스토리지에 저장되었습니다:', shuffledQuestions[0]);
-  }, []);
+  }, [shuffledQuestions]);
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev === 0) {
           clearInterval(timerInterval);
-          // navigate('/speaking', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
+          navigate('/speaking1', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
         }
         return prev > 0 ? prev - 1 : 0; // 타이머 감소
       });
@@ -61,7 +61,7 @@ function Question() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문1" className="question-title" />
-        <p className="question-text2">{shuffledQuestions[0]}</p>
+        <p className="question-text1234">{shuffledQuestions[0]}</p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
@@ -81,7 +81,7 @@ function Question() {
             r={circleRadius}
             style={{
               strokeDasharray: circleCircumference,
-              strokeDashoffset: circleCircumference * (1 + timeLeft / 5),
+              strokeDashoffset: circleCircumference * (1+timeLeft / 5),
             }}
           ></circle>
         </svg>

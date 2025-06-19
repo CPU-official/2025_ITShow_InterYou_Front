@@ -55,36 +55,61 @@ body {
 
 /* 질문 박스 스타일 */
 .question-box {
+  position: relative;
   text-align: center;
   background: #F9FCFF;
   border-radius: 23px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  top : 52px;
+  top: 52px;
   width: 714px;
-  height: 378px;
-  /* margin-bottom: 78px; */
+  min-height: 240px;
+  padding: 50px 24px 40px 24px; /* 위, 좌우, 아래 여백 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;   /* <-- 위쪽 정렬 */
 }
 
-.question-title3 {
+.question-text2 {
+  word-break: keep-all;      
+  white-space: pre-line;
+  line-height: 1.6;
+  font-size: 30px;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Pretendard', sans-serif;
+  text-align: center;
+  font-weight: 500; 
+   position: relative;
+  top: 30px;
+}
+
+.question-title {
   position: relative; 
-  top: 0px;  
+  top: 5px;  
   color: content/standard/secondary;
-  font-family: Pretendard;
   font-style: normal;
   line-height: normal;
   /* marginbottom: 77px; */
 }
 
-.question-text3 {
-  position: relative; 
-  font-size: 34px;
-  top: 45px; 
-  margin-bottom: 30px;
-   font-family: Pretendard;
-}
-.think-image{
+.questionText{
   position: relative;
-  top: 40px;
+  bottom: 80px;
+  line-height: 1.6; 
+  font-size: 30px;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Pretendard', sans-serif;
+  text-align: center;
+  font-weight: 500; 
+}
+
+
+  .think-image1{
+    position: absolute;
+    bottom: 65px;
+    transform: translateX(-50%);
 }
 
 .timer-text {
@@ -96,6 +121,7 @@ body {
 /* 타이머 원형 스타일 */
 .timer-circle {
   position: relative;
+  top: 70px;
   width: 244px;
   height: 236.834px;
 }
@@ -108,13 +134,13 @@ body {
 
 .circle-background {
   fill: none;
-  stroke: #e0e0e0; /* 배경색 */
+  stroke: #E7F2FF; /* 배경색 */
   stroke-width: 14;
 }
 
-.circle-progress1 {
+.circle-progress {
   fill: none;
-  stroke: #5A72FF; /* 진행 바 색상 */
+  stroke: #9760E9; /* 진행 바 색상 */
   stroke-width: 14;
   stroke-linecap: round;
   stroke-dasharray: 691;
