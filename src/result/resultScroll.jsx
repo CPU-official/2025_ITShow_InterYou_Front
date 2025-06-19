@@ -18,6 +18,10 @@ const q2_feedback = localStorage.getItem('q2_feedback');
 const q3_feedback = localStorage.getItem('q3_feedback');
 const total = localStorage.getItem('total');
 
+console.log("q1:", q1);
+console.log("q1_answer:", q1_answer);
+console.log("q1_feedback:", q1_feedback);
+
 const DownArrowIcon = () => (
   <img
     src={DownArrow}
@@ -51,7 +55,7 @@ const ResultSummary = ({ score }) => {
   return (
     <section className="section">
       <div className="score-row">
-        <span className="score">{score}</span>
+        <span className="MainScore">{score}</span>
         <span className="hundred">/ 100</span>
       </div>
       <button className="ranking-btn" onClick={handleRankingClick}>

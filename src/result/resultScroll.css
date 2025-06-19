@@ -107,6 +107,7 @@ body, html, #root {
 }
 
 .question-text {
+  margin-top: 40px;
   color: #000000;
   font-family: Pretendard, sans-serif;
   font-size: 42px;
@@ -155,13 +156,13 @@ body, html, #root {
   flex-shrink: 0;
   border-radius: 18.744px;
     background: #F9FCFF;
-    margin-bottom: 33px;
+    margin-bottom: 27px;
 }
 
 .ai-comments-content {
   display: flex;
   width: 708.77px;
-  height: 188.54px;
+  height: 220px;
   padding: 32.296px 40.152px 40.218px 40.152px;
   flex-direction: column;
   align-items: flex-start;
@@ -209,6 +210,7 @@ body, html, #root {
 }
 
 .profile-image {
+  margin-top: 10px;
   width: 400px;
   height: 410px;
   background: #bbb;
@@ -319,10 +321,19 @@ body, html, #root {
 }
 
 .error-p{
-
   margin-top: 170px;
   margin-left: 43px;
   font-size: 20px;
   font-weight: 500;
   font-family: Pretendard;
+}
+
+.MainScore {
+  color: #057FFF;
+  font-family: Pretendard, sans-serif;
+  font-size: 70px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34.421px;
+  letter-spacing: -1.594px;
 }
