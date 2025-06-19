@@ -231,7 +231,7 @@ body, html, #root {
 .score {
   color: #057FFF;
   font-family: Pretendard, sans-serif;
-  font-size: 79.724px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: 34.421px;
@@ -239,6 +239,8 @@ body, html, #root {
 }
 
 .hundred {
+  margin-top: 10px;
+  margin-left: 10px;
   color: #000;
   font-family: Pretendard, sans-serif;
   font-size: 50px;
@@ -314,4 +316,13 @@ body, html, #root {
   padding: 4px 8px;
   border-radius: 4px;
   margin: 0 2px;
+}
+
+.error-p{
+
+  margin-top: 170px;
+  margin-left: 43px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Pretendard;
 }

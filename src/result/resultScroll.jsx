@@ -1,11 +1,27 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./resultScroll.css";
+import { useNavigate } from 'react-router-dom';
 import DownArrow from "./Group1667.svg";
 
+const userName = localStorage.getItem('name');
+
+const q1 = localStorage.getItem('q1');
+const q2 = localStorage.getItem('q2');
+const q3 = localStorage.getItem('q3');
+
+const q1_answer = localStorage.getItem('q1_answer');
+const q2_answer = localStorage.getItem('q2_answer');
+const q3_answer = localStorage.getItem('q3_answer');
+
+const q1_feedback = localStorage.getItem('q1_feedback');
+const q2_feedback = localStorage.getItem('q2_feedback');
+const q3_feedback = localStorage.getItem('q3_feedback');
+const total = localStorage.getItem('total');
+
 const DownArrowIcon = () => (
-  <img 
-    src={DownArrow} 
-    alt="Scroll down" 
+  <img
+    src={DownArrow}
+    alt="Scroll down"
     style={{
       width: '134px',
       height: '175px',
@@ -15,9 +31,9 @@ const DownArrowIcon = () => (
 );
 
 const DownArrowIcon2 = () => (
-  <img 
-    src={DownArrow} 
-    alt="Scroll down" 
+  <img
+    src={DownArrow}
+    alt="Scroll down"
     style={{
       width: '82px',
       height: '107px',
@@ -27,20 +43,25 @@ const DownArrowIcon2 = () => (
 );
 
 const ResultSummary = ({ score }) => {
+  const navigate = useNavigate(); 
+  const handleRankingClick = () => {
+    console.log("랭킹 버튼 클릭됨");
+    navigate('/ranking'); 
+  };
   return (
     <section className="section">
       <div className="score-row">
         <span className="score">{score}</span>
-        <span className="hundred">/100</span>
+        <span className="hundred">/ 100</span>
       </div>
-      <button className="ranking-btn">
+      <button className="ranking-btn" onClick={handleRankingClick}>
         랭킹 보기
       </button>
     </section>
   );
 };
 
-function QASection({ questionNumber, questionText, yourAnswer, aiComment }) {  
+function QASection({ questionNumber, questionText, yourAnswer, aiComment }) {
   return (
     <section className="section">
       <div className="question-title">
@@ -59,7 +80,7 @@ function QASection({ questionNumber, questionText, yourAnswer, aiComment }) {
           </div>
         </div>
         <div className="answer-image-col">
-          <div className="profile-image" />
+          <div className="profile-image"><p className="error-p">현재 기기 문제로 캠이 작동하지 않습니다.<br/> 체험에 불편을 드려 죄송합니다 😖</p></div>
         </div>
       </div>
       <div className="result-scroll-text">
@@ -73,28 +94,28 @@ function ResultScroll() {
   const qaData = [
     {
       questionNumber: "Q1.",
-      questionText: "빨간 벽돌을 건축 외 다른 용도로 사용할 수 있을까요?",
-      yourAnswer: "동굴이야 작업할 때 모서리에 찔려 다치지 않을 수 있고,<br />운반에 용이하기 때문입니다.",
-      aiComment: "맨홀 뚜껑이 원형인 이유에 대한 답변은 안전성과 운반의 편의성을 잘 지적하고 있으나, 다른 중요한 요소(구멍에 빠지지 않도록 하는 것)를 다루지 못한 점이 아쉽습니다. 좀 더 포괄적인 설명이 필요합니다."
+      questionText: q1,
+      yourAnswer: q1_answer,
+      aiComment: q1_feedback
     },
     {
       questionNumber: "Q2.",
-      questionText: "맨홀 뚜껑은 왜 원형일까요?",
-      yourAnswer: "원형이면 작업할 때 모서리에 찔려 다치지 않을 수 있고,<br />운반에 용이하기 때문입니다.",
-      aiComment: "맨홀 뚜껑이 원형인 이유에 대한 답변은 안전성과 운반의 편의성을 잘 지적하고 있으나, 다른 중요한 요소(구멍에 빠지지 않도록 하는 것)를 다루지 못한 점이 아쉽습니다."
+      questionText: q2,
+      yourAnswer: q2_answer,
+      aiComment: q2_feedback
     },
     {
       questionNumber: "Q3.",
-      questionText: "창의성을 기르는 방법은 무엇일까요?",
-      yourAnswer: "다양한 경험을 해보고 여러 관점에서 생각해보며<br />기존의 틀에서 벗어나 새로운 시도를 하는 것입니다.",
-      aiComment: "창의성을 기르는 방법에 대한 답변이 포괄적이고 실용적입니다. 다양한 경험과 관점의 중요성을 잘 언급했으며, 실제로 적용 가능한 조언을 제공했습니다."
+      questionText: q3,
+      yourAnswer: q3_answer,
+      aiComment: q3_feedback
     }
   ];
 
   const sections = [
     <section className="section intro-section" key="intro">
       <div className="result-title">
-        <span className="result-highlight">전유림</span>
+        <span className="result-highlight">{userName}</span>
         <span className="result-rest">님의 테스트 결과</span>
       </div>
       <div className="result-scroll-text">
@@ -110,7 +131,7 @@ function ResultScroll() {
         aiComment={qa.aiComment}
       />
     )),
-    <ResultSummary key="summary" score={89.01} />
+    <ResultSummary key="summary" score={total} />
   ];
 
   const [currentSection, setCurrentSection] = useState(0);
@@ -142,7 +163,7 @@ function ResultScroll() {
     const handleKeyDown = (event) => {
       if (isTransitioning) return;
 
-      switch(event.key) {
+      switch (event.key) {
         case 'Enter':
         case 'ArrowDown':
         case ' ':

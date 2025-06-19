@@ -10,8 +10,8 @@ import Speak2 from './Answer/speaking2';
 import Speak3 from './Answer/speaking3';
 import AnswerLoading from './answerLoading/answerLoading';
 import RecordLoading from './Loading/recordLoading';
-// import Ranking from './Ranking/RankingPage';
-// import ResultScroll from './Result/resultScroll';
+import Ranking from './Ranking/RankingPage';
+import ResultScroll from './Result/resultScroll';
 
 const questionRoutes = [
   { path: '/question1', element: <Q1 /> },
@@ -38,6 +38,8 @@ function App() {
       ))}
       <Route path = "/recordLoading" element={<RecordLoading/>}/>
       <Route path="/answerLoading" element={<AnswerLoading />} />
+      <Route path="/resultScroll" element={<ResultScroll />} />
+      <Route path="/ranking" element={<Ranking />} />
     </Routes>
   );
 }

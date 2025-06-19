@@ -1,0 +1,26 @@
+INFO:     Started server process [8880]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\whisper\transcribe.py:126: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+Whisper 모델 로드 완료.
+INFO:     127.0.0.1:55199 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55213 - "OPTIONS /analyze_answers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55213 - "POST /analyze_answers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55378 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55560 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55590 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55769 - "POST /transcribe_audio_file HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55854 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55938 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56000 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56663 - "OPTIONS /analyze_answers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56663 - "POST /analyze_answers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56930 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57849 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57923 - "OPTIONS /analyze_answers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57923 - "POST /analyze_answers HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:61516 - "GET /ranking/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61613 - "GET /ranking/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61614 - "GET /ranking/ HTTP/1.1" 404 Not Found
