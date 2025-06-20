@@ -3,6 +3,10 @@
 
 
 
+Attempted import error: 'useEffect' is not exported from 'react-router-dom' (imported as 'useEffect').
+ERROR in ./src/MainPage/Main_Page.jsx 14:2-11
+export 'useEffect' (imported as 'useEffect') was not found in 'react-router-dom' (possible exports:
+
  useEffect(() => {
     // 프로그램 시작 시 기존 질문 세트 삭제
     localStorage.removeItem('pickedQuestions');
