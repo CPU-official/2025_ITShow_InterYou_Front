@@ -2,6 +2,15 @@
 2025 IT Show 출품작 InterYou - Frontend
 
 
+
+ useEffect(() => {
+    // 프로그램 시작 시 기존 질문 세트 삭제
+    localStorage.removeItem('pickedQuestions');
+    localStorage.removeItem('q1');
+    localStorage.removeItem('q2');
+    localStorage.removeItem('q3');
+  }, []);
+
   import { useState } from 'react';
   import questions from './questions.json';
 
