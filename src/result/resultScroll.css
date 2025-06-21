@@ -157,6 +157,7 @@ body, html, #root {
   border-radius: 18.744px;
     background: #F9FCFF;
     margin-bottom: 27px;
+  overflow: auto;
 }
 
 .ai-comments-content {

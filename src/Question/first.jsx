@@ -3,41 +3,39 @@ import './QuestionAll.css';
 import { useNavigate } from 'react-router-dom';
 import Question1 from './title_1.svg';
 import Think from './think_1.svg';
-import give from './Give';
+import useShuffledQuestions from './Give'; // <- 커스텀 훅 import
 
 function Question() {
-
-  const [progress, setProgress] = useState(0); // 0%에서 시작!  
-  const [timeLeft, setTimeLeft] = useState(5); // 타이머 초기값
-  const shuffledQuestions = give(); // 랜덤 질문 가져오기
+  const [progress, setProgress] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(5);
   const navigate = useNavigate();
+  const shuffledQuestions = useShuffledQuestions(); // <- 커스텀 훅 사용
 
   useEffect(() => {
-    // 진행바 하이라이팅 효과
-    const target = 34; // 목표 퍼센트 (페이지별로 25, 50, 75, 100 등)
-    setTimeout(() => setProgress(target), 100); // 0.1초 후 애니메이션 시작
+    if (shuffledQuestions.length === 0) return;
+    const target = 34;
+    setTimeout(() => setProgress(target), 100);
     localStorage.setItem('q1', shuffledQuestions[0]);
     console.log('첫 번째 질문 (q1)이 로컬 스토리지에 저장되었습니다:', shuffledQuestions[0]);
   }, [shuffledQuestions]);
 
   useEffect(() => {
+    if (shuffledQuestions.length === 0) return;
     const timerInterval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev === 0) {
           clearInterval(timerInterval);
-          navigate('/speaking1', { state: { question: shuffledQuestions[0] } }); // 타이머 종료 후 페이지 이동, 랜덤값 넘기기기
+          navigate('/speaking1', { state: { question: shuffledQuestions[0] } });
         }
-        return prev > 0 ? prev - 1 : 0; // 타이머 감소
+        return prev > 0 ? prev - 1 : 0;
       });
     }, 1200);
 
-    return () => {
-      clearInterval(timerInterval); // 컴포넌트 언마운트 시 타이머 정리
-    };
+    return () => clearInterval(timerInterval);
   }, [navigate, shuffledQuestions]);
 
-  const circleRadius = 110; // 반지름   
-  const circleCircumference = 2 * Math.PI * circleRadius; // 원 둘레
+  const circleRadius = 110;
+  const circleCircumference = 2 * Math.PI * circleRadius;
   const dotPercents = [0, 33, 66, 99];
 
   return (
@@ -61,7 +59,9 @@ function Question() {
       </div>
       <div className="question-box">
         <img src={Question1} alt="질문1" className="question-title" />
-        <p className="question-text1234">{shuffledQuestions[0]}</p>
+        <p className="question-text1234">
+          {shuffledQuestions.length > 0 ? shuffledQuestions[0] : "질문을 불러오는 중..."}
+        </p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>
@@ -81,7 +81,7 @@ function Question() {
             r={circleRadius}
             style={{
               strokeDasharray: circleCircumference,
-              strokeDashoffset: circleCircumference * (1+timeLeft / 5),
+              strokeDashoffset: circleCircumference * (1 + timeLeft / 5),
             }}
           ></circle>
         </svg>
@@ -91,4 +91,4 @@ function Question() {
   );
 }
 
-export default Question; 
+export default Question;

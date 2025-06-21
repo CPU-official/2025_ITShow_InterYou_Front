@@ -15,9 +15,7 @@ import uvicorn
 
 # .env 로드 및 Gemini 설정
 load_dotenv()
-gemini_api_key = os.getenv("GOOGLE_API_KEY")
-if not gemini_api_key:
-    raise ValueError("GEMINI_API_KEY 환경 변수가 설정되지 않았습니다.")
+gemini_api_key = "AIzaSyC8fqsGfNZnALyg5hOvVW4ktvDu6UMFQQY"
 genai.configure(api_key=gemini_api_key)
 gemini_model = genai.GenerativeModel(
     'gemini-1.5-flash',
@@ -143,11 +141,11 @@ A3: {request.answer_text3}
 - 각 답변에 대해 **창의성, 논리성** 점수를 부여합니다.
 - 각 점수는 반드시 **10 단위 정수**여야 하며, 범위는 **30, 40, 50, ..., 100**입니다.
 (예: 30, 40, 50, ..., 100 외의 숫자는 절대 사용하지 마세요)
-- - **총점은 전체 6개 점수의 평균**이며, 소수점 둘째 자리까지 계산합니다.
+- - **총점은 전체 6개 점수의 평균**입니다.
 ---
 
-### 결과 출력 형식 (이 형식 외 어떤 텍스트도 포함하지 마세요)
-
+### 결과 출력 예시 (이 형식 외 어떤 텍스트도 포함하지 마세요)
+### 이것은 출력 예시입니다. 이 형식 대로 결과를 생성해주세요.
 ```json
 {{
   "answer1_comment": "<답변에 대한 요약 피드백>",
@@ -165,7 +163,7 @@ A3: {request.answer_text3}
     {{ "aspect": "창의성", "score": 70 }},
     {{ "aspect": "논리성", "score": 90 }}
   ],
-  "total_score": 56.66
+  "total_score": 56
 }}
 """
     try:

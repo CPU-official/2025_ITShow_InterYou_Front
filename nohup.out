@@ -24,3 +24,30 @@ INFO:     127.0.0.1:57923 - "POST /analyze_answers HTTP/1.1" 422 Unprocessable E
 INFO:     127.0.0.1:61516 - "GET /ranking/ HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:61613 - "GET /ranking/ HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:61614 - "GET /ranking/ HTTP/1.1" 404 Not Found
+INFO:     Started server process [4848]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+C:\Users\Mirim\AppData\Local\Programs\Python\Python311\Lib\site-packages\whisper\transcribe.py:126: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+Whisper 모델 로드 완료.
+INFO:     127.0.0.1:62439 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62460 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62480 - "POST /transcribe_audio_file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62488 - "OPTIONS /analyze_answers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62488 - "POST /analyze_answers HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62706 - "POST /analyze_answers HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62781 - "POST /analyze_answers HTTP/1.1" 500 Internal Server Error
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4848]
+INFO:     Started server process [4528]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+forrtl: error (200): program aborting due to window-CLOSE event
+Image              PC                Routine            Line        Source             
+KERNELBASE.dll     00007FFCD0D14987  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFCD1F7259D  Unknown               Unknown  Unknown
+ntdll.dll          00007FFCD38EAF38  Unknown               Unknown  Unknown
