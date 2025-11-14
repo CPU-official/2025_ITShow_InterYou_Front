@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './answerLoading.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ function AnswerLoading() {
 
     const sendToAI = async () => {
       try {
-        const response = await fetch("http://localhost:8000/analyze_answers", {
+        const response = await fetch("https://interyou.mirim-it-show.site/api/analyze_answers", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

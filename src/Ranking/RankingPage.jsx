@@ -17,7 +17,7 @@ const RankingPage = () => {
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        const response = await fetch("http://3.39.189.31:3000/ranking/"); // API 주소를 정확히 입력해주세요
+        const response = await fetch("https://interyou.mirim-it-show.site/api/ranking/");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

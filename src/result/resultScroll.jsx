@@ -1,22 +1,22 @@
-import React, { useEffect, useState, useCallback } from "react";
-import "./resultScroll.css";
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DownArrow from "./Group1667.svg";
+import DownArrow from './Group1667.svg';
+import './resultScroll.css';
 
-const userName = localStorage.getItem('name');
+function ResultScroll() {
+  const [userName] = useState(localStorage.getItem('name'));
+  const [q1] = useState(localStorage.getItem('q1'));
+  const [q2] = useState(localStorage.getItem('q2'));
+  const [q3] = useState(localStorage.getItem('q3'));
 
-const q1 = localStorage.getItem('q1');
-const q2 = localStorage.getItem('q2');
-const q3 = localStorage.getItem('q3');
+  const [q1_answer] = useState(localStorage.getItem('q1_answer'));
+  const [q2_answer] = useState(localStorage.getItem('q2_answer'));
+  const [q3_answer] = useState(localStorage.getItem('q3_answer'));
 
-const q1_answer = localStorage.getItem('q1_answer');
-const q2_answer = localStorage.getItem('q2_answer');
-const q3_answer = localStorage.getItem('q3_answer');
-
-const q1_feedback = localStorage.getItem('q1_feedback');
-const q2_feedback = localStorage.getItem('q2_feedback');
-const q3_feedback = localStorage.getItem('q3_feedback');
-const total = localStorage.getItem('total');
+  const [q1_feedback] = useState(localStorage.getItem('q1_feedback'));
+  const [q2_feedback] = useState(localStorage.getItem('q2_feedback'));
+  const [q3_feedback] = useState(localStorage.getItem('q3_feedback'));
+  const [total] = useState(localStorage.getItem('total'));
 
 console.log("q1:", q1);
 console.log("q1_answer:", q1_answer);
@@ -50,7 +50,7 @@ const ResultSummary = ({ score }) => {
   const navigate = useNavigate();
   const handleRankingClick = () => {
     console.log("랭킹 버튼 클릭됨");
-    navigate('/ranking');
+    navigate('/');
   };
   return (
     <section className="section">
@@ -59,7 +59,7 @@ const ResultSummary = ({ score }) => {
         <span className="hundred">/ 100</span>
       </div>
       <button className="ranking-btn" onClick={handleRankingClick}>
-        랭킹 보기
+       처음으로
       </button>
     </section>
   );
@@ -94,7 +94,6 @@ function QASection({ questionNumber, questionText, yourAnswer, aiComment }) {
   );
 }
 
-function ResultScroll() {
   const qaData = [
     {
       questionNumber: "Q1.",
@@ -207,13 +206,13 @@ function ResultScroll() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
   }, [goToNextSection, goToPrevSection, isTransitioning]);
-  const API_BASE_URL = "http://3.39.189.31:3000";
+  const API_BASE_URL = "https://interyou.mirim-it-show.site/api";
   // DB 업데이트를 위한 useEffect 훅 추가
   useEffect(() => {
     const updateScore = async () => {
       if (userName && total) {
         try {
-          const response = await fetch(`${API_BASE_URL}/users/score`, { // API 엔드포인트에 맞게 경로 수정 필요
+          const response = await fetch(`${API_BASE_URL}/users/score/`, { // API 엔드포인트에 맞게 경로 수정 필요
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -242,7 +241,8 @@ function ResultScroll() {
       <div
         className="sections-wrapper"
         style={{
-          transform: `translateY(-${currentSection * 100}vh)`
+          transform: `translateY(-${currentSection * 100}vh)`,
+          transition: 'transform 0.8s ease-in-out'
         }}
       >
         {sections.map((section, idx) => (

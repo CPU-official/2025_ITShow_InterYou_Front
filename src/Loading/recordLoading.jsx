@@ -15,7 +15,7 @@ function RecordLoading() {
     const [isLoading, setIsLoading] = useState(true); // 초기값 true
     const [error, setError] = useState(null);
 
-    const backendApiUrl = 'http://127.0.0.1:8000/transcribe_audio_file';
+    const backendApiUrl = 'https://interyou.mirim-it-show.site/api/transcribe_audio_file';
 
     // API 호출 상태를 추적하는 useRef 추가
     // 이 훅은 컴포넌트 리렌더링과 무관하게 값을 유지합니다.
