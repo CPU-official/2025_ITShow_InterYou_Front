@@ -5,10 +5,6 @@ import onest from './1.svg';
 import twost from './2.svg';
 import threest from './3.svg';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-
-=======
->>>>>>> d361e804a97393eded228d32c47f19ef1f3a7c00
 
 const RankingPage = () => {
   const [rankingData, setRankingData] = useState([]);
