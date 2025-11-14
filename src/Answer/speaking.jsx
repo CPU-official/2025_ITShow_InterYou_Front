@@ -141,8 +141,8 @@ function Speaking() {
         </div>
       </div>
       <div className="question-box">
-        <img src={Question1} alt="질문1" className="question-title" />
-        <p className="questionText">{question}</p>
+        <img src={Question1} alt="질문1" className="question-title2" />
+        <p className="question-text2">{question}</p>
         <p className="timer-text">
           <img src={Think} alt="생각하는 이미지" className="think-image1" />
         </p>

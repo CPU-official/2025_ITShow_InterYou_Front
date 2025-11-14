@@ -28,7 +28,6 @@ body {
   left: 237px;
 }
 
-/*  */
 .progress-dots {
   position: absolute;
   top: 60px; /* 진행바 아래로 */
@@ -83,11 +82,12 @@ body {
   align-items: center;
 }
 
-/* n번째 문제제 */
+/* n번째 문제 */
 .question-title{
   position: relative;
   top : -0px;
 }
+
 /* 문제 유형 */
 .question-text123 {
   word-break: keep-all;      

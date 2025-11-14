@@ -5,7 +5,7 @@ import Warning from './Warning.jsx';
 import Complete from "./Complete.jsx";
 
 // ------------------- ✨ 백엔드 연결 ✨ -------------------
-const API_BASE_URL = "http://3.39.189.31:3000";
+const API_BASE_URL = "https://interyou.mirim-it-show.site/api";
 
 function Information_2({ onClose }) {
   const [agree, setAgreed] = useState(false);
