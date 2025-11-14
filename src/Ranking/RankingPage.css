@@ -24,6 +24,7 @@
 .logo-main {
     width: 150px; /* 로고 크기 조절 */
     height: auto;
+    margin-right:25px;
 }
 
 .ranking-title {

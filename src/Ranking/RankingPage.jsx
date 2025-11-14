@@ -5,6 +5,10 @@ import onest from './1.svg';
 import twost from './2.svg';
 import threest from './3.svg';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
+
+=======
+>>>>>>> d361e804a97393eded228d32c47f19ef1f3a7c00
 
 const RankingPage = () => {
   const [rankingData, setRankingData] = useState([]);
@@ -51,8 +55,7 @@ const RankingPage = () => {
 
     fetchRanking();
   }, []);
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate(); // 
   const handleRankingClick1 = () => {
     console.log("랭킹 버튼 클릭됨");
     navigate('/'); 
@@ -94,7 +97,6 @@ const RankingPage = () => {
           </div>
         ))}
       </div>
-
       <button className="first button" onClick={handleRankingClick1}>처음으로</button>
     </div>
   );
