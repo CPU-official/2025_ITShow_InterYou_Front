@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DownArrow from './Group1667.svg';
 import './resultScroll.css';
 
-<<<<<<< HEAD
+
 function ResultScroll() {
   const [userName] = useState(localStorage.getItem('name'));
   const [q1] = useState(localStorage.getItem('q1'));
@@ -23,8 +23,7 @@ console.log("q1:", q1);
 console.log("q1_answer:", q1_answer);
 console.log("q1_feedback:", q1_feedback);
 
-=======
->>>>>>> upstream/main
+
 const DownArrowIcon = () => (
   <img
     src={DownArrow}
@@ -97,72 +96,6 @@ function QASection({ questionNumber, questionText, yourAnswer, aiComment }) {
   );
 }
 
-<<<<<<< HEAD
-=======
-function ResultScroll() {
-  // useState로 localStorage 값들을 관리
-  const [userData, setUserData] = useState({
-    userName: '',
-    q1: '',
-    q2: '',
-    q3: '',
-    q1_answer: '',
-    q2_answer: '',
-    q3_answer: '',
-    q1_feedback: '',
-    q2_feedback: '',
-    q3_feedback: '',
-    total: ''
-  });
-
-  const [currentSection, setCurrentSection] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  // localStorage 데이터를 읽어오는 함수
-  const loadUserData = useCallback(() => {
-    const newUserData = {
-      userName: localStorage.getItem('name') || '',
-      q1: localStorage.getItem('q1') || '',
-      q2: localStorage.getItem('q2') || '',
-      q3: localStorage.getItem('q3') || '',
-      q1_answer: localStorage.getItem('q1_answer') || '',
-      q2_answer: localStorage.getItem('q2_answer') || '',
-      q3_answer: localStorage.getItem('q3_answer') || '',
-      q1_feedback: localStorage.getItem('q1_feedback') || '',
-      q2_feedback: localStorage.getItem('q2_feedback') || '',
-      q3_feedback: localStorage.getItem('q3_feedback') || '',
-      total: localStorage.getItem('total') || ''
-    };
-
-    console.log("Loading user data:", newUserData);
-    setUserData(newUserData);
-  }, []);
-
-  // 컴포넌트 마운트 시와 focus 이벤트 시 데이터 로드
-  useEffect(() => {
-    loadUserData();
-
-    // 페이지에 포커스가 돌아올 때마다 데이터 새로고침
-    const handleFocus = () => {
-      loadUserData();
-    };
-
-    // localStorage 변경 감지 (같은 탭에서)
-    const handleStorageChange = () => {
-      loadUserData();
-    };
-
-    window.addEventListener('focus', handleFocus);
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [loadUserData]);
-
-  // qaData를 userData 기반으로 동적 생성
->>>>>>> upstream/main
   const qaData = [
     {
       questionNumber: "Q1.",
@@ -273,24 +206,15 @@ function ResultScroll() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
   }, [goToNextSection, goToPrevSection, isTransitioning]);
-<<<<<<< HEAD
   const API_BASE_URL = "https://interyou.mirim-it-show.site/api";
   // DB 업데이트를 위한 useEffect 훅 추가
-=======
 
-  const API_BASE_URL = "http://3.39.189.31:3000";
-  
-  // DB 업데이트를 위한 useEffect 훅
->>>>>>> upstream/main
   useEffect(() => {
     const updateScore = async () => {
       if (userData.userName && userData.total) {
         try {
-<<<<<<< HEAD
           const response = await fetch(`${API_BASE_URL}/users/score/`, { // API 엔드포인트에 맞게 경로 수정 필요
-=======
-          const response = await fetch(`${API_BASE_URL}/users/score`, {
->>>>>>> upstream/main
+
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
