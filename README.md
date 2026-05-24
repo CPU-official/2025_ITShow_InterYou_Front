@@ -8,6 +8,6 @@
   <li><b>Back</b> : Python </li>
   <li><b>Design</b> : Figma </li>
   <li><b>DB</b> : MongoDB </li>
-  <li><b>Server</b> : Ubuntu </li>
+  <li><b>Server</b> : Ubuntu, AWS EC2 </li>
   <li><b>Api & Lib</b> : FastAPI, Gemini API, Whisper</li>
 </ul>
